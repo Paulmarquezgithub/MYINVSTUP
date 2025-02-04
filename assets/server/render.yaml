@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: invstup-backend
+    runtime: node
+    buildCommand: yarn install
+    startCommand: yarn start # ← As required by Render
+    envVars:
+      - key: DATABASE_URL
+        value: ${NEON_DATABASE_URL}
+      - key: JWT_SECRET
+        generateValue: true

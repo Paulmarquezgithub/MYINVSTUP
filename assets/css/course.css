@@ -1,0 +1,230 @@
+/* Reset */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Global Styles */
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f6f8;
+    color: #333;
+    line-height: 1.6;
+  }
+  
+  /* Container */
+  .container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  /* Header */
+  header {
+    background: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    padding: 15px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .logo img {
+    max-width: 130px;
+  }
+  .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+  }
+  .nav-links li a {
+    text-decoration: none;
+    font-weight: 600;
+    color: #333;
+    transition: color 0.3s ease;
+  }
+  .nav-links li a:hover,
+  .nav-links li a.active {
+    color: #007bff;
+  }
+  
+  /* Hero Section */
+  #hero {
+    background: linear-gradient(135deg, #007bff 0%, #00acc1 100%);
+    color: #fff;
+    padding: 80px 0;
+    text-align: center;
+  }
+  .hero-content h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+  }
+  .hero-content p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .btn-main {
+    background: #ffcc00;
+    color: #333;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: background 0.3s ease;
+  }
+  .btn-main:hover {
+    background: #e6b800;
+  }
+  
+  /* Courses Section */
+  #courses {
+    background: #fff;
+    padding: 60px 0;
+    text-align: center;
+  }
+  #courses h2 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+  }
+  #courses p {
+    max-width: 700px;
+    margin: 0 auto 40px;
+    font-size: 1rem;
+    color: #555;
+  }
+  .courses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+  }
+  .course-card {
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 25px 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .course-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+  }
+  .course-card h3 {
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+  }
+  .course-card ul {
+    text-align: left;
+    list-style: disc;
+    margin-left: 20px;
+    margin-bottom: 20px;
+    color: #555;
+  }
+  .course-card .btn {
+    display: inline-block;
+    background: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.3s ease;
+  }
+  .course-card .btn:hover {
+    background: #0056b3;
+  }
+  
+  /* Highlight Card */
+  .course-card.highlight {
+    border: 2px solid #007bff;
+  }
+  
+  /* Why Certification Section */
+  #why-certification {
+    background: #f4f6f8;
+    padding: 60px 0;
+    text-align: center;
+  }
+  #why-certification h2 {
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+  }
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+  }
+  .why-item {
+    background: #fff;
+    padding: 25px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  }
+  .why-item h3 {
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    color: #007bff;
+  }
+  .why-item p {
+    color: #555;
+  }
+  
+  /* Footer */
+  footer {
+    background: #333;
+    color: #bbb;
+    padding: 20px 0;
+    text-align: center;
+  }
+  .footer-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  .footer-links {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+  }
+  .footer-links li a {
+    color: #bbb;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  .footer-links li a:hover {
+    color: #fff;
+  }
+  
+  /* Fade-in Animation */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+  .fade-in.appear {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    .hero-content h1 {
+      font-size: 2.5rem;
+    }
+    .nav-links {
+      flex-direction: column;
+      gap: 10px;
+    }
+  }

@@ -1,0 +1,254 @@
+:root {
+  --primary-gradient: linear-gradient(135deg, #0066ff 0%, #00a3ff 100%);
+  --glass-bg: rgba(255, 255, 255, 0.1);
+  --blur-amount: 12px;
+  --header-height: 80px;
+}
+
+body {
+  font-family: 'Inter', 'Arial', sans-serif;
+  background: #0a0e17;
+  color: #ffffff;
+  scroll-behavior: smooth;
+  padding-top: var(--header-height);
+}
+
+header {
+  background: linear-gradient(to right, #007bff, #0056b3);
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center the content */
+}
+header .logo img {
+  height: 60px;
+
+ 
+}
+.logo {
+display: flex;
+flex-direction: column;
+align-items: center;
+gap: 10px;
+}
+
+.logo img {
+max-width: 150px;
+border-radius: 10px;
+}
+
+.logo h1 {
+font-size: 2.5rem;
+font-weight: bold;
+}
+
+header nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 10px;
+}
+
+header nav ul li {
+  padding: 5px 10px; /* Ensure uniform padding around the links */
+}
+
+header nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 5px 10px;
+}
+
+header nav ul li a:hover, header nav ul li a.active {
+  color: #ffcc00;
+  text-decoration: underline;
+}
+/* Welcome Section with Animation */
+#welcome {
+  padding: calc(var(--header-height) + 40px) 20px 80px;
+  text-align: center;
+  animation: scaleIn 0.8s ease forwards;
+}
+
+#welcome h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  background: linear-gradient(45deg, #fff, #88c0ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.subtitle {
+  color: #88c0ff;
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.welcome-content {
+  max-width: 800px;
+  margin: 0 auto;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+/* Investment Cards with Enhanced Hover Effects */
+.investment-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.investment-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--blur-amount));
+  border-radius: 15px;
+  overflow: hidden;
+  position: relative;
+  transform: translateZ(0);
+  transition: transform 0.3s ease;
+}
+
+.investment-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, 
+    rgba(0,102,255,0.1) 0%,
+    rgba(0,163,255,0.05) 100%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.investment-card:hover {
+  transform: translateY(-5px);
+}
+
+.investment-card:hover::before {
+  opacity: 1;
+}
+
+.card-image img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.card-content {
+  padding: 1.5rem;
+}
+
+.investment-details {
+  display: grid;
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.detail-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.8rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.detail-label {
+  color: #88c0ff;
+  font-size: 0.9rem;
+}
+
+.detail-value {
+  font-weight: 600;
+}
+
+.risk-rating {
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+}
+
+.risk-rating.high { background: rgba(0, 255, 0, 0.1); color: #00ff00; }
+.risk-rating.medium { background: rgba(255, 255, 0, 0.1); color: #ffff00; }
+.risk-rating.low { background: rgba(255, 0, 0, 0.1); color: #ff0000; }
+
+.investment-description {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin: 1.5rem 0;
+  opacity: 0.9;
+}
+
+/* Button Styles */
+.btn {
+  display: block;
+  width: 100%;
+  padding: 1rem;
+  text-align: center;
+  background: var(--primary-gradient);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: 600;
+  transition: opacity 0.3s ease;
+}
+
+.btn:hover {
+  opacity: 0.9;
+  cursor: pointer;
+}
+
+/* Scroll Effects */
+[data-scroll] {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+[data-scroll="in"] {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Gradient Text Effects */
+h1, h2, h3 {
+  background: linear-gradient(45deg, #fff, #88c0ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* New Scroll-Triggered Animations */
+@keyframes scaleIn {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .investment-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  #welcome h1 {
+    font-size: 2rem;
+  }
+  
+  .card-image img {
+    height: 180px;
+  }
+}

@@ -1,0 +1,193 @@
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    background: linear-gradient(to right, #007bff, #0056b3);
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center the content */
+}
+
+header .logo img {
+    height: 60px;
+}
+
+.logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo img {
+  max-width: 150px;
+  border-radius: 10px;
+}
+
+logo h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+header nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 10px;
+}
+
+header nav ul li {
+    padding: 5px 10px; /* Ensure uniform padding around the links */
+}
+
+header nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 5px 10px;
+}
+
+header nav ul li a:hover, header nav ul li a.active {
+    color: #ffcc00;
+    text-decoration: underline;
+}
+
+main {
+    padding: 40px 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+#account-section {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.auth-section form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+}
+
+.auth-section input {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 300px;
+}
+
+.auth-section .btn {
+    background: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.auth-section .btn:hover {
+    background: #0056b3;
+}
+
+.auth-link {
+    margin-top: 10px;
+    font-size: 0.9rem;
+}
+
+.auth-link a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.auth-link a:hover {
+    text-decoration: underline;
+}
+
+/* Dashboard Section */
+.dashboard {
+    margin-top: 40px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.stats-container {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 30px;
+}
+
+.account-info, .performance-stats {
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    width: 45%;
+    text-align: left;
+}
+
+.account-info h3, .performance-stats h3 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+.performance-stats ul {
+    list-style: none;
+    padding: 0;
+}
+
+.performance-stats ul li {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.performance-stats span {
+    font-weight: bold;
+}
+
+/* Tools Section */
+.tools-section {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.tools-section .btn {
+    background: #ffcc00;
+    color: #007bff;
+    font-size: 18px;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px 15px;
+}
+
+.tools-section .btn:hover {
+    background: #e6b800;
+}
+
+/* Footer */
+footer {
+    background: #333;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}

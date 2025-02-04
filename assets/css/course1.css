@@ -1,0 +1,441 @@
+/* course1.css */
+
+/* ======== Financial Design System ======== */
+:root {
+    /* Financial Color System */
+    --color-bull: #27AE60;
+    --color-bear: #EB5757;
+    --color-primary: #2F80ED;
+    --color-secondary: #9B51E0;
+    --color-surface-0: #0F172A;
+    --color-surface-1: #1E293B;
+    --color-surface-2: #334155;
+    --color-text-primary: #F8FAFC;
+    --color-text-secondary: #94A3B8;
+    
+    /* Financial Gradients */
+    --gradient-risk: linear-gradient(45deg, var(--color-bear) 0%, var(--color-bull) 100%);
+    --gradient-market: radial-gradient(circle at top right, 
+      var(--color-primary) 0%, 
+      var(--color-secondary) 100%);
+    
+    /* Typography System */
+    --font-financial: 'Inter', system-ui, sans-serif;
+    --font-mono: 'SF Mono', monospace;
+    --font-scale-ratio: 1.333;
+    --text-base: 1rem;
+    --text-sm: calc(var(--text-base) / var(--font-scale-ratio));
+    --text-lg: calc(var(--text-base) * var(--font-scale-ratio));
+    
+    /* Financial Transitions */
+    --transition-enter: cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-exit: cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-duration: 300ms;
+    
+    /* 3D Visualization Parameters */
+    --perspective-base: 1000px;
+    --asset-node-size: 120px;
+    --webgl-z-index: -1;
+}
+
+/* ======== Base Financial Styles ======== */
+html {
+    scroll-behavior: smooth;
+    background: var(--color-surface-0);
+    color: var(--color-text-primary);
+    font-family: var(--font-financial);
+    line-height: 1.6;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background: linear-gradient(to right, #007bff, #0056b3);
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center the content */
+}
+header .logo img {
+    height: 60px;
+
+   
+}
+.logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo img {
+  max-width: 150px;
+  border-radius: 10px;
+}
+
+.logo h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+header nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 10px;
+}
+
+header nav ul li {
+    padding: 5px 10px; /* Ensure uniform padding around the links */
+}
+
+header nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 5px 10px;
+}
+
+header nav ul li a:hover, header nav ul li a.active {
+    color: #ffcc00;
+    text-decoration: underline;
+}
+
+main {
+    padding: 40px 20px;
+}
+
+/* Introduction to Financial Concepts Section */
+#financial-concepts {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+#financial-concepts h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+#financial-concepts p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+}
+
+.key-areas {
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+}
+
+.key-area {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 30px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.key-area:hover {
+    transform: scale(1.05);
+}
+
+.key-area h3 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+.key-area ul {
+    list-style: disc;
+    margin: 20px 0;
+    padding-left: 40px;
+}
+
+/* Time Value of Money (TVM) Section */
+#time-value-of-money {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+#time-value-of-money h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+.asset-node[data-risk-profile="medium"] {
+    box-shadow: 0 0 30px rgba(242, 201, 76, 0.2);
+}
+
+.asset-node[data-risk-profile="low"] {
+    box-shadow: 0 0 30px rgba(39, 174, 96, 0.2);
+}
+
+/* Progress Management System */
+.progress-track {
+    --track-height: 8px;
+    --track-radius: 4px;
+    position: relative;
+    height: var(--track-height);
+    background: var(--color-surface-2);
+    border-radius: var(--track-radius);
+    overflow: hidden;
+}
+
+.progress-indicator {
+    position: absolute;
+    height: 100%;
+    background: var(--color-primary);
+    border-radius: inherit;
+    transition: width 1s var(--transition-enter);
+}
+
+.risk-profile-indicator {
+    position: absolute;
+    right: 0;
+    height: 100%;
+    width: 3px;
+    background: var(--color-bull);
+    transition: 
+      background 0.3s var(--transition-enter),
+      transform 0.3s var(--transition-enter);
+}
+
+/* ======== Financial Animations ======== */
+@keyframes financialPulse {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.05); opacity: 0.8; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes assetGlow {
+    0% { box-shadow: 0 0 10px rgba(47, 128, 237, 0.2); }
+    50% { box-shadow: 0 0 20px rgba(47, 128, 237, 0.4); }
+    100% { box-shadow: 0 0 10px rgba(47, 128, 237, 0.2); }
+}
+
+@keyframes riskPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+/* ======== Responsive Financial Layouts ======== */
+@media (max-width: 1200px) {
+    .content-grid[data-grid-type="asymmetric"] {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .parametric-group {
+        --control-height: 2rem;
+        --thumb-size: 1.25rem;
+    }
+    
+    .correlation-matrix {
+        --matrix-size: 100%;
+        --cell-size: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    :root {
+        --font-scale-ratio: 1.25;
+        --asset-node-size: 90px;
+    }
+    
+    .module-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .parametric-controls {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ======== Utility Classes ======== */
+.financial-glass {
+    background: linear-gradient(
+      145deg,
+      rgba(30, 41, 59, 0.9) 0%,
+      rgba(15, 23, 42, 0.9) 100%
+    );
+    backdrop-filter: blur(20px);
+    border-radius: 1.5rem;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+.risk-gradient {
+    background: linear-gradient(
+      to right,
+      var(--color-bear) 0%,
+      var(--color-bull) 100%
+    );
+}
+
+.financial-elevation-1 {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+.financial-elevation-2 {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* ======== 3D Financial Visualization Styles ======== */
+.webgl-loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: var(--color-surface-0);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.loader-progress {
+    width: 200px;
+    height: 4px;
+    background: var(--color-surface-2);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.loader-progress::after {
+    content: '';
+    display: block;
+    width: var(--progress, 0%);
+    height: 100%;
+    background: var(--color-primary);
+    transition: width 1s var(--transition-enter);
+}
+
+/* WebGL transition */
+.webgl-loader[data-load-state="loaded"] {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 1s ease, visibility 1s linear 1s;
+}
+
+/* Performance Metrics */
+.performance-metrics {
+    display: grid;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: var(--color-surface-1);
+    border-radius: 1rem;
+    margin-top: 2rem;
+}
+
+.metric {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.financial-terms {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 2rem;
+    opacity: 0.6;
+}
+
+/* ======== Interactive States ======== */
+[data-load-state="loading"] .financial-visualization {
+    opacity: 0.05;
+}
+
+[data-risk-category="aggressive"] .risk-profile-indicator {
+    background: var(--color-bear);
+}
+
+[data-risk-category="conservative"] .risk-profile-indicator {
+    background: var(--color-bull);
+}
+
+.parametric-slider:active + .parametric-input {
+    transform: translateY(-2px);
+    box-shadow: var(--financial-elevation-2);
+}
+
+/* ======== Typography Enhancements ======== */
+.equation-render {
+    font-size: 1.25rem;
+    color: var(--color-text-secondary);
+    margin: 1rem 0;
+}
+
+.performance-metric {
+    font-family: var(--font-mono);
+    font-size: 1.1rem;
+}
+
+.risk-score {
+    font-weight: 700;
+    background: var(--gradient-risk);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+/* ======== Advanced Interactions ======== */
+.asset-node:hover {
+    transform: translateZ(20px);
+    z-index: 2;
+}
+
+.parametric-slider:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+.matrix-cell:hover {
+    transform: scale(1.2);
+    z-index: 1;
+}
+
+/* ======== Animation Triggers ======== */
+[data-state="active"] .asset-node {
+    animation: financialPulse 2s infinite;
+}
+
+[data-simulation-active="true"] .correlation-matrix {
+    animation: riskPulse 1.5s ease-in-out infinite;
+}
+
+/* ======== Content Grid Layout ======== */
+.content-grid[data-grid-type="asymmetric"] {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 3rem;
+    padding: 2rem 0;
+}
+
+@media (max-width: 1200px) {
+    .content-grid[data-grid-type="asymmetric"] {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ======== Print Styles ======== */
+@media print {
+    .financial-visualization,
+    .webgl-loader {
+        display: none;
+    }
+    
+    .parametric-controls {
+        break-inside: avoid;
+    }
+}

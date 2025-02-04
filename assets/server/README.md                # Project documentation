@@ -1,0 +1,63 @@
+# INVSTUP - Virtual Investment & Certification Platform
+
+A web platform for virtual investments and professional certification exams.
+
+![Project Architecture](https://via.placeholder.com/1200x400?text=INVSTUP+Architecture+Diagram)
+
+## ✨ Features
+- 💰 Virtual investment portfolio management
+- 📜 Certification exam system with scoring
+- 🔐 Secure user authentication
+- 📊 Interactive financial courses
+- 📈 Real-time market simulation (mock data)
+
+## 🚀 Quick Start
+
+### Prerequisites
+- Node.js v18+
+- PostgreSQL v15+
+- Git
+
+### Installation
+```bash
+git clone https://github.com/yourusername/INVSTUP.git
+cd INVSTUP/server
+npm install
+DB_HOST=localhost
+DB_USER=postgres
+DB_PASSWORD=your_db_password
+DB_NAME=invstup_db
+PORT=3000
+JWT_SECRET=your_jwt_secret_key
+psql -U postgres -f database/db.sql
+psql -U postgres -f database/seed.sql
+# Start backend
+cd server
+npm run dev
+
+# Frontend (open in browser)
+open client/index.html
+heroku create invstup-api
+heroku addons:create heroku-postgresql:hobby-dev
+cd server
+git push heroku main
+
+# Set environment variables:
+heroku config:set DB_HOST=xxx DB_USER=xxx DB_PASSWORD=xxx JWT_SECRET=xxx
+## 🚀 Deployment
+new update
+1. Frontend: GitHub Pages (free)
+2. Backend: [Render.com](https://render.com)
+3. Database: [Neon.tech](https://neon.tech)
+
+### Neon.tech Setup:
+1. Create serverless Postgres database
+2. Get connection string from dashboard
+3. Add to Render.com environment as `DATABASE_URL`
+
+### Render.com Setup:
+1. Connect GitHub repo
+2. Select "Web Service"
+3. Add environment variables:
+   - `DATABASE_URL` (from Neon.tech)
+   - `JWT_SECRET=your_secret_key`

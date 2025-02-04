@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Finance Story: The Journey to Financial Mastery</title>
+  <style>
+    :root {
+      --primary-color: #2c3e50;
+      --secondary-color: #3498db;
+      --accent-color: #e74c3c;
+      --background-color: #ecf0f1;
+      --light-gray: #f1f2f6;
+    }
+    
+    * {
+      box-sizing: border-box;
+    }
+    
+    body {
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      background: var(--background-color);
+      color: var(--primary-color);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+    
+    header {
+      background: white;
+      padding: 15px 20px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    header h1 {
+      margin: 0;
+      font-size: 1.8em;
+      color: var(--secondary-color);
+      text-align: center;
+    }
+    
+    .tabs {
+      display: flex;
+      justify-content: center;
+      margin-top: 10px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    
+    .tab {
+      background: white;
+      padding: 10px 20px;
+      border: 2px solid var(--secondary-color);
+      border-radius: 30px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.3s, color 0.3s;
+    }
+    
+    .tab:hover, .tab:focus, .tab.active {
+      background: var(--secondary-color);
+      color: white;
+      outline: none;
+    }
+    
+    main {
+      max-width: 1000px;
+      margin: 20px auto;
+      padding: 10px;
+    }
+    
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.7s ease-out forwards;
+    }
+    
+    .tab-content.active {
+      display: block;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    section {
+      margin-bottom: 60px;
+      padding: 30px 20px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      margin-top: 20px;
+    }
+    
+    section h2 {
+      color: var(--secondary-color);
+      margin-top: 0;
+    }
+    
+    .content-box {
+      background: var(--light-gray);
+      padding: 20px;
+      border-radius: 10px;
+      margin: 15px 0;
+    }
+    
+    /* Financial Journey SVG Animation */
+    .financial-path {
+      margin: 30px auto;
+      max-width: 800px;
+      position: relative;
+    }
+    
+    .financial-path svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    
+    /* Chart Container (Budgeting Chapter) */
+    .chart-container {
+      position: relative;
+      max-width: 800px;
+      margin: 30px auto;
+      height: 300px;
+    }
+    
+    /* Quiz Section */
+    .quiz-section {
+      background: var(--light-gray);
+      padding: 30px;
+      border-radius: 12px;
+      margin: 30px 0;
+      text-align: center;
+    }
+    
+    .quiz-section h3 {
+      color: var(--accent-color);
+      margin-top: 0;
+    }
+    
+    .quiz-section input[type="text"] {
+      width: 80%;
+      max-width: 400px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1em;
+      margin-bottom: 10px;
+    }
+    
+    .quiz-section button {
+      margin-top: 5px;
+      padding: 10px 20px;
+      background: var(--secondary-color);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1em;
+      transition: background 0.3s, transform 0.2s;
+    }
+    
+    .quiz-section button:hover, .quiz-section button:focus {
+      background: var(--accent-color);
+      transform: scale(1.05);
+      outline: none;
+    }
+    
+    .feedback {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    
+    /* Overall Scoreboard */
+    .scoreboard {
+      text-align: center;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      margin: 30px auto;
+      max-width: 500px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    
+    .scoreboard h3 {
+      color: var(--secondary-color);
+      margin-top: 0;
+    }
+    
+    /* Reset Button for Quiz */
+    .reset-btn {
+      background: var(--accent-color);
+      margin-top: 15px;
+    }
+    
+    /* Floating animation for illustrations */
+    .float {
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    @media (max-width: 600px) {
+      .tab {
+        padding: 8px 15px;
+        font-size: 0.9em;
+      }
+      
+      .quiz-section input[type="text"] {
+        width: 100%;
+      }
+    }
+  </style>
+  <!-- Chart.js Library -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <header>
+    <h1>Finance Story: The Journey to Financial Mastery</h1>
+    <nav class="tabs" aria-label="Main Navigation">
+      <button class="tab active" data-target="introContent" aria-controls="introContent">Introduction</button>
+      <button class="tab" data-target="foundationsContent" aria-controls="foundationsContent">Foundations</button>
+      <button class="tab" data-target="budgetingContent" aria-controls="budgetingContent">Budgeting</button>
+      <button class="tab" data-target="investingContent" aria-controls="investingContent">Investing</button>
+      <button class="tab" data-target="industryContent" aria-controls="industryContent">Industry Outlook</button>
+      <button class="tab" data-target="quizContent" aria-controls="quizContent">Final Quiz</button>
+    </nav>
+  </header>
+  <main>
+    <!-- Introduction Tab Content -->
+    <section id="introContent" class="tab-content active" role="tabpanel" aria-labelledby="Introduction">
+      <h2>Welcome to Your Financial Adventure!</h2>
+      <p>
+        Our journey begins with you stepping into the fascinating realm of finance. Here, you will unlock the mysteries of money,
+        learn how to manage budgets, invest wisely, and understand the dynamic world of the financial industry.
+      </p>
+      <div class="financial-path">
+        <svg viewBox="0 0 800 200" preserveAspectRatio="xMidYMid meet">
+          <polyline id="introPath" class="float" points="0,150 150,120 300,140 450,80 600,100 800,70" fill="none" stroke="var(--accent-color)" stroke-width="5" stroke-dasharray="1000" stroke-dashoffset="1000" />
+        </svg>
+      </div>
+      <p>Watch the animated path as it reveals the road to financial wisdom!</p>
+    </section>
+    
+    <!-- Foundations Tab Content -->
+    <section id="foundationsContent" class="tab-content" role="tabpanel" aria-labelledby="Foundations">
+      <h2>Chapter 1: Finance Foundations</h2>
+      <p>
+        A strong foundation is essential for any journey. Just as a building stands tall on a solid base, your financial success starts
+        with understanding the basics such as interest, inflation, and the time value of money.
+      </p>
+      <article class="content-box">
+        <h3>Simple Interest Explained</h3>
+        <p><strong>Formula:</strong> I = P × r × t</p>
+        <p>
+          Here, I is the interest earned, P is the principal amount, r is the annual interest rate (expressed as a decimal), and t is the time (in years).
+          For example, investing $1,000 at a 5% annual rate for 3 years earns you $150 in interest.
+        </p>
+      </article>
+      <article class="content-box">
+        <h3>Why It Matters</h3>
+        <ul>
+          <li>Understanding interest helps you gauge the cost of loans.</li>
+          <li>The time value of money teaches you to invest early.</li>
+          <li>Inflation awareness protects and grows your purchasing power.</li>
+        </ul>
+      </article>
+    </section>
+    
+    <!-- Budgeting Tab Content -->
+    <section id="budgetingContent" class="tab-content" role="tabpanel" aria-labelledby="Budgeting">
+      <h2>Chapter 2: Budgeting & Money Management</h2>
+      <p>
+        Budgeting is like designing a roadmap where every dollar has a destination. Smart budgeting helps you save, reduce unnecessary expenses,
+        and prepares you for big financial opportunities.
+      </p>
+      <article class="content-box">
+        <h3>Compound Interest: The Magic Multiplier</h3>
+        <p>
+          Unlike simple interest, compound interest lets your earnings generate more earnings. The formula is:
+        </p>
+        <p><em>A = P × (1 + r)<sup>t</sup></em></p>
+        <p>
+          For example, investing $500 at a 4% annual rate over 5 years—thanks to compounding—yields roughly $608.33.
+        </p>
+      </article>
+      <!-- Interactive Savings Chart -->
+      <div class="chart-container">
+        <canvas id="savingsChart" aria-label="Compound Interest Chart" role="img"></canvas>
+      </div>
+      <p style="text-align:center; font-size:0.9em;">Interactive chart: Visualize your savings growth over time!</p>
+    </section>
+    
+    <!-- Investing Tab Content -->
+    <section id="investingContent" class="tab-content" role="tabpanel" aria-labelledby="Investing">
+      <h2>Chapter 3: Investing Insights</h2>
+      <p>
+        Investing is an art that balances risk with reward. Whether it's stocks, bonds, or mutual funds, understanding the risks ensures you plant the seeds
+        for long-term prosperity.
+      </p>
+      <article class="content-box">
+        <h3>Expected Return</h3>
+        <p>
+          To measure potential performance, the expected return formula is used:
+        </p>
+        <p><em>E(R) = Σ (pᵢ × Rᵢ)</em></p>
+        <p>
+          In this calculation, each possible outcome is weighted by its probability, providing you with a statistical average return.
+        </p>
+      </article>
+      <article class="content-box">
+        <h3>Diversification & Risk</h3>
+        <p>
+          Diversification is key to managing risk. By spreading your investments, you reduce the negative impact of a single asset's poor performance.
+        </p>
+        <ul>
+          <li>Stocks offer potential high rewards but come with greater risk.</li>
+          <li>Bonds provide stability and lower risk.</li>
+          <li>Mutual funds balance a variety of asset types.</li>
+        </ul>
+      </article>
+    </section>
+    
+    <!-- Industry Outlook Tab Content -->
+    <section id="industryContent" class="tab-content" role="tabpanel" aria-labelledby="Industry">
+      <h2>Chapter 4: Finance Industry Outlook</h2>
+      <p>
+        The finance industry is a dynamic ecosystem that affects every aspect of the economy—from local banks to global markets. Learn about the major players and trends shaping our financial world.
+      </p>
+      <article class="content-box">
+        <h3>Key Players</h3>
+        <ul>
+          <li><strong>Banks:</strong> Provide loans and safeguard deposits.</li>
+          <li><strong>Investment Firms:</strong> Manage assets and craft investment products.</li>
+          <li><strong>Insurance Companies:</strong> Offer protection in uncertain times.</li>
+          <li><strong>Regulators:</strong> Maintain market integrity and protect consumers.</li>
+        </ul>
+      </article>
+      <article class="content-box">
+        <h3>Emerging Trends</h3>
+        <p>
+          Technological innovation, globalization, and creative financial products are continuously transforming the industry. Staying informed helps you leverage these changes.
+        </p>
+      </article>
+    </section>
+    
+    <!-- Final Quiz Tab Content -->
+    <section id="quizContent" class="tab-content" role="tabpanel" aria-labelledby="Quiz">
+      <h2>Final Quiz: Test Your Financial Mastery</h2>
+      <p>
+        Now that you’ve journeyed through the world of finance, it’s time to assess your understanding. Answer the quiz questions below—
+        your cumulative score will be tracked live!
+      </p>
+      
+      <!-- Quiz Question 1 -->
+      <div class="quiz-section">
+        <h3>Quiz Question 1</h3>
+        <p>What does APR stand for?</p>
+        <input type="text" id="q1" placeholder="Your answer here" />
+        <div>
+          <button onclick="checkAnswer('q1','annual percentage rate','q1Feedback')">Submit Answer</button>
+        </div>
+        <div class="feedback" id="q1Feedback"></div>
+      </div>
+      
+      <!-- Quiz Question 2 -->
+      <div class="quiz-section">
+        <h3>Quiz Question 2</h3>
+        <p>
+          Which phenomenon refers to earning interest on interest?
+        </p>
+        <input type="text" id="q2" placeholder="Your answer here" />
+        <div>
+          <button onclick="checkAnswer('q2','compound','q2Feedback')">Submit Answer</button>
+        </div>
+        <div class="feedback" id="q2Feedback"></div>
+      </div>
+      
+      <!-- Quiz Question 3 -->
+      <div class="quiz-section">
+        <h3>Quiz Question 3</h3>
+        <p>
+          Which asset is typically considered riskier: stocks or bonds?
+        </p>
+        <input type="text" id="q3" placeholder="Your answer here" />
+        <div>
+          <button onclick="checkAnswer('q3','stocks','q3Feedback')">Submit Answer</button>
+        </div>
+        <div class="feedback" id="q3Feedback"></div>
+      </div>
+      
+      <!-- Overall Score Display -->
+      <div class="scoreboard">
+        <h3>Your Total Score</h3>
+        <p id="totalScore">0 / 3</p>
+        <button class="reset-btn" onclick="resetQuiz()">Reset Quiz</button>
+      </div>
+    </section>
+  </main>
+  
+  <script>
+    // Handle Tab Navigation with smooth scrolling
+    const tabs = document.querySelectorAll('.tab');
+    const tabContents = document.querySelectorAll('.tab-content');
+    
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const targetId = tab.getAttribute('data-target');
+        
+        // Remove active class from all tabs and hide all tab content
+        tabs.forEach(t => t.classList.remove('active'));
+        tabContents.forEach(content => content.classList.remove('active'));
+        
+        // Activate selected tab and smoothly scroll
+        tab.classList.add('active');
+        const targetSection = document.getElementById(targetId);
+        targetSection.classList.add('active');
+        targetSection.scrollIntoView({ behavior: 'smooth' });
+        
+        // Initialize interactive chart if Budgeting tab
+        if (targetId === 'budgetingContent') {
+          updateSavingsChart();
+        }
+      });
+    });
+    
+    // Animate the SVG path in Introduction
+    function animatePath() {
+      const path = document.getElementById("introPath");
+      const length = path.getTotalLength();
+      path.style.strokeDasharray = length;
+      path.style.strokeDashoffset = length;
+      let startTime = null;
+      const duration = 2500;
+      
+      function draw(now) {
+        if (!startTime) startTime = now;
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        path.style.strokeDashoffset = length * (1 - progress);
+        if (progress < 1) {
+          requestAnimationFrame(draw);
+        }
+      }
+      requestAnimationFrame(draw);
+    }
+    
+    document.addEventListener("DOMContentLoaded", () => {
+      animatePath();
+      // Default: ensure the active tab content is in view
+      document.querySelector('.tab.active').click();
+    });
+    
+    // Interactive Savings Chart for Budgeting
+    let savingsChart;
+    function updateSavingsChart() {
+      const ctx = document.getElementById('savingsChart').getContext('2d');
+      const principal = 500;
+      const rate = 0.04;
+      const years = 5;
+      const labels = [];
+      const data = [];
+      
+      for (let year = 0; year <= years; year++) {
+        labels.push(year);
+        data.push(principal * Math.pow(1 + rate, year));
+      }
+      
+      if (savingsChart instanceof Chart) {
+        savingsChart.destroy();
+      }
+      
+      savingsChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Compound Savings Growth',
+            data: data,
+            borderColor: '#3498db',
+            backgroundColor: 'rgba(52,152,219,0.3)',
+            fill: true,
+            tension: 0.3,
+            pointRadius: 5,
+            pointHoverRadius: 7
+          }]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            y: { 
+              beginAtZero: true,
+              title: { display: true, text: 'Amount ($)' }
+            },
+            x: {
+              title: { display: true, text: 'Years' }
+            }
+          },
+          plugins: {
+            tooltip: {
+              callbacks: {
+                label: (context) => 'Year ' + context.label + ': $' + context.parsed.y.toFixed(2)
+              }
+            }
+          }
+        }
+      });
+    }
+    
+    // Quiz and Score Logic
+    let totalScore = 0;
+    const totalQuestions = 3;
+    
+    function updateScore() {
+      document.getElementById("totalScore").innerText = totalScore + " / " + totalQuestions;
+    }
+    
+    // Basic string-matching for answers (case insensitive)
+    function checkAnswer(inputId, correctAnswer, feedbackId) {
+      const userAnswer = document.getElementById(inputId).value.trim().toLowerCase();
+      const feedbackElem = document.getElementById(feedbackId);
+      
+      if (userAnswer.includes(correctAnswer.toLowerCase())) {
+        if (feedbackElem.getAttribute("data-scored") !== "true") {
+          feedbackElem.textContent = "Correct!";
+          feedbackElem.style.color = "green";
+          totalScore++;
+          feedbackElem.setAttribute("data-scored", "true");
+        } else {
+          feedbackElem.textContent = "Already answered correctly!";
+        }
+      } else {
+        feedbackElem.textContent = "Incorrect. Try again.";
+        feedbackElem.style.color = "red";
+      }
+      updateScore();
+    }
+    
+    function resetQuiz() {
+      totalScore = 0;
+      updateScore();
+      // Reset answers and feedbacks
+      ['q1', 'q2', 'q3'].forEach(id => {
+        document.getElementById(id).value = "";
+      });
+      ['q1Feedback', 'q2Feedback', 'q3Feedback'].forEach(id => {
+        const elem = document.getElementById(id);
+        elem.textContent = "";
+        elem.removeAttribute("data-scored");
+      });
+    }
+  </script>
+</body>
+</html>

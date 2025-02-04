@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>INVSTUP - Account</title>
+  <link rel="stylesheet" href="assets/css/account.css">
+  <script src="assets/js/account.js" defer></script>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="logo">
+        <img src="assets/images/logo-banner.png" alt="INVSTUP Logo">
+      </div>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="investments.html">Investments</a></li>
+          <li><a href="certification.html">Certifications</a></li>
+          <li><a href="account.html" class="active">Account</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section id="account-section">
+      <div class="container">
+        <h1>Welcome to Your Account</h1>
+
+        <!-- Account Auth Section (Login/Signup) -->
+        <div id="account-auth">
+          <div id="login-section" class="auth-section">
+            <h2>Login to Your Account</h2>
+            <form id="login-form">
+              <label for="email">Email:</label>
+              <input type="email" id="email" name="email" required>
+              <label for="password">Password:</label>
+              <input type="password" id="password" name="password" required>
+              <button type="submit" class="btn">Login</button>
+            </form>
+            <p class="auth-link">
+              Don't have an account? <a href="register.html">Create one here</a>.
+            </p>
+          </div>
+        </div>
+
+        <!-- Account Dashboard Section -->
+        <div id="account-dashboard" class="dashboard">
+          <h2>Your Account Dashboard</h2>
+
+          <div class="stats-container">
+            <div class="account-info">
+              <h3>Account Overview</h3>
+              <p><strong>Account Balance:</strong> <span class="balance">$10,500</span></p>
+              <p><strong>Total Investments:</strong> <span class="investment">$7,200</span></p>
+              <p><strong>Portfolio Forecast:</strong> <span class="forecast">+8.5% ROI (Next Quarter)</span></p>
+            </div>
+
+            <div class="performance-stats">
+              <h3>Performance Stats</h3>
+              <ul>
+                <li><strong>Total Wins:</strong> <span class="wins">15</span></li>
+                <li><strong>Total Losses:</strong> <span class="losses">5</span></li>
+                <li><strong>Win Rate:</strong> <span class="win-rate">75%</span></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="tools-section">
+            <h3>Account Tools</h3>
+            <button class="btn">View Portfolio</button>
+            <button class="btn">Withdraw Funds</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2024 INVSTUP. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>

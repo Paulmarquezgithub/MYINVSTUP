@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CFA Mastery Course</title>
+  <style>
+    :root {
+      --primary-color: #2c3e50;
+      --secondary-color: #3498db;
+      --accent-color: #e74c3c;
+      --text-color: #2c3e50;
+      --background-color: #ecf0f1;
+      --sidebar-bg: #f4f4f4;
+      --quiz-bg: #f9f9f9;
+    }
+    body {
+      font-family: 'Segoe UI', system-ui;
+      line-height: 1.6;
+      color: var(--text-color);
+      background: var(--background-color);
+      display: flex;
+      flex-direction: row;
+      margin: 0;
+      padding: 0;
+    }
+    /* Sidebar Navigation */
+    .sidebar {
+      width: 250px;
+      background: var(--sidebar-bg);
+      padding: 20px;
+      height: 100vh;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+      position: sticky;
+      top: 0;
+    }
+    .sidebar h2 {
+      margin-top: 0;
+      color: var(--primary-color);
+    }
+    .nav-tab {
+      display: block;
+      margin: 15px 0;
+      padding: 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      background: var(--background-color);
+      text-decoration: none;
+      color: var(--primary-color);
+      transition: background 0.3s ease;
+    }
+    .nav-tab:hover,
+    .nav-tab.active {
+      background: var(--secondary-color);
+      color: white;
+    }
+    /* Main Content */
+    .content {
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 30px;
+    }
+    .module {
+      background: white;
+      border-radius: 15px;
+      padding: 30px;
+      margin: 30px 0;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    .course-overview {
+      margin-bottom: 30px;
+      padding: 20px;
+      background: var(--background-color);
+      border-radius: 10px;
+    }
+    h2 {
+      border-bottom: 2px solid var(--secondary-color);
+      padding-bottom: 10px;
+    }
+    .explanation, .takeaways {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 10px;
+      margin: 20px 0;
+      border-left: 4px solid var(--secondary-color);
+    }
+    .formula-box {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      margin: 20px 0;
+      border-left: 4px solid var(--secondary-color);
+    }
+    .calculator-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+      margin: 25px 0;
+    }
+    .input-group {
+      margin-bottom: 20px;
+    }
+    .input-group label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+    input[type="number"],
+    input[type="range"] {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    .visualization-container {
+      height: 400px;
+      margin: 30px 0;
+      position: relative;
+    }
+    /* Quiz Section */
+    .quiz {
+      background: var(--quiz-bg);
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+    .quiz h4 {
+      margin-top: 0;
+    }
+    .quiz button {
+      background: var(--secondary-color);
+      color: white;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .quiz .result {
+      margin-top: 10px;
+      font-weight: 600;
+    }
+    /* Responsive adjustments */
+    @media(max-width: 768px) {
+      body {
+        flex-direction: column;
+      }
+      .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+      }
+    }
+  </style>
+  <!-- Chart.js and MathJax CDN -->
+  <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+  <nav class="sidebar">
+    <h2>Course Modules</h2>
+    <a class="nav-tab active" href="#" data-module="overview">Overview</a>
+    <a class="nav-tab" href="#" data-module="tvm">Time Value of Money</a>
+    <a class="nav-tab" href="#" data-module="mpt">Portfolio Theory</a>
+    <a class="nav-tab" href="#" data-module="derivatives">Derivatives</a>
+    <a class="nav-tab" href="#" data-module="fixedincome">Fixed Income</a>
+    <a class="nav-tab" href="#" data-module="ratios">Financial Ratios</a>
+  </nav>
+
+  <div class="content">
+    <!-- Course Overview -->
+    <div class="module" id="overview">
+      <h2>Welcome to the CFA Mastery Course</h2>
+      <div class="course-overview">
+        <p>This course is designed to help you master key financial concepts and quantitative methods used in CFA examinations and financial analysis. Each module provides a conceptual explanation, interactive calculations, visualizations, and a self-assessment quiz at the end to reinforce your learning.</p>
+        <ul>
+          <li><strong>Time Value of Money:</strong> Learn how money grows over time.</li>
+          <li><strong>Portfolio Theory:</strong> Understand risk-return tradeoffs and efficient frontiers.</li>
+          <li><strong>Derivatives:</strong> Explore options pricing with the Black-Scholes model.</li>
+          <li><strong>Fixed Income:</strong> Analyze bond pricing and yield curves.</li>
+          <li><strong>Financial Ratios:</strong> Interpret company performance using ratios and DuPont analysis.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Module: Time Value of Money -->
+    <div class="module" id="tvm" style="display:none;">
+      <h2>Time Value of Money</h2>
+      <div class="explanation">
+        <h3>Core Concept</h3>
+        <p>The time value of money (TVM) states that a dollar today is worth more than a dollar tomorrow because of its potential earning capacity.</p>
+        <div class="formula-box">
+          <p>\( FV = PV \times (1 + r)^n \)</p>
+          <p>Where:</p>
+          <ul>
+            <li>FV = Future Value</li>
+            <li>PV = Present Value</li>
+            <li>r = Periodic interest rate</li>
+            <li>n = Number of periods</li>
+          </ul>
+        </div>
+      </div>
+      <div class="calculator-grid">
+        <div class="input-group">
+          <label>Present Value ($)</label>
+          <input type="number" id="tvm-pv" value="1000" step="100">
+          <input type="range" id="tvm-pv-range" min="0" max="10000" step="100" value="1000">
+        </div>
+        <div class="input-group">
+          <label>Annual Rate (%)</label>
+          <input type="number" id="tvm-rate" value="5" step="0.1">
+          <input type="range" id="tvm-rate-range" min="0" max="20" step="0.1" value="5">
+        </div>
+        <div class="input-group">
+          <label>Periods (years)</label>
+          <input type="number" id="tvm-n" value="5" step="1">
+          <input type="range" id="tvm-n-range" min="1" max="30" value="5">
+        </div>
+      </div>
+      <div class="visualization-container">
+        <canvas id="tvmChart"></canvas>
+      </div>
+      <div class="takeaways">
+        <h4>Key Takeaways</h4>
+        <ul>
+          <li>Money grows at an exponential rate with compound interest.</li>
+          <li>The effect of interest rates is amplified over longer periods.</li>
+        </ul>
+      </div>
+      <div class="quiz">
+        <h4>Quick Quiz</h4>
+        <p>If you invest $1000 at a 5% annual interest rate for 5 years, approximately what is the future value?</p>
+        <input type="number" id="quiz-tvm-answer" placeholder="Your answer in dollars">
+        <button onclick="checkQuiz('tvm')">Submit</button>
+        <div class="result" id="result-tvm"></div>
+      </div>
+    </div>
+
+    <!-- Module: Modern Portfolio Theory -->
+    <div class="module" id="mpt" style="display:none;">
+      <h2>Modern Portfolio Theory</h2>
+      <div class="explanation">
+        <h3>Efficient Frontier</h3>
+        <p>The efficient frontier shows optimal portfolios that offer the highest expected return for a given level of risk.</p>
+        <div class="formula-box">
+          <p>\( \sigma_p = \sqrt{w_1^2\sigma_1^2 + w_2^2\sigma_2^2 + 2w_1w_2\sigma_1\sigma_2\,Cov_{1,2}} \)</p>
+          <ul>
+            <li>σ<sub>p</sub> = Portfolio standard deviation</li>
+            <li>w = Asset weights</li>
+            <li>σ = Asset standard deviations</li>
+            <li>Cov = Covariance between assets</li>
+          </ul>
+        </div>
+      </div>
+      <div class="calculator-grid">
+        <div class="input-group">
+          <label>Risk-Free Rate (%)</label>
+          <input type="number" id="risk-free" value="2" step="0.1">
+        </div>
+        <div class="input-group">
+          <label>Asset Correlation</label>
+          <input type="number" id="correlation" value="0.3" step="0.1" min="-1" max="1">
+        </div>
+      </div>
+      <div class="visualization-container">
+        <canvas id="portfolioChart"></canvas>
+      </div>
+      <div class="takeaways">
+        <h4>Key Takeaways</h4>
+        <ul>
+          <li>A mix of assets optimizes the balance between risk and return.</li>
+          <li>The Capital Market Line provides the best risk-return trade-off.</li>
+        </ul>
+      </div>
+      <div class="quiz">
+        <h4>Quick Quiz</h4>
+        <p>Increasing the correlation between assets generally moves the efficient frontier in which direction?</p>
+        <input type="text" id="quiz-mpt-answer" placeholder="your answer">
+        <button onclick="checkQuiz('mpt')">Submit</button>
+        <div class="result" id="result-mpt"></div>
+      </div>
+    </div>
+
+    <!-- Module: Options Pricing with Derivatives -->
+    <div class="module" id="derivatives" style="display:none;">
+      <h2>Options Pricing - Black-Scholes Model</h2>
+      <div class="explanation">
+        <h3>Black-Scholes Model</h3>
+        <p>The Black-Scholes model is used to calculate the theoretical value of European call options.</p>
+        <div class="formula-box">
+          <p>\( C = S_0 N(d_1) - X e^{-rT} N(d_2) \)</p>
+          <p>\( d_1 = \frac{\ln(S_0/X) + (r + \sigma^2/2)T}{\sigma\sqrt{T}} \)</p>
+          <p>\( d_2 = d_1 - \sigma\sqrt{T} \)</p>
+          <ul>
+            <li>C = Call option price</li>
+            <li>S<sub>0</sub> = Current stock price</li>
+            <li>X = Strike price</li>
+            <li>r = Risk-free rate</li>
+            <li>T = Time to expiration</li>
+            <li>σ = Volatility</li>
+          </ul>
+        </div>
+      </div>
+      <div class="calculator-grid">
+        <div class="input-group">
+          <label>Stock Price ($)</label>
+          <input type="number" id="stock-price" value="100" step="5">
+        </div>
+        <div class="input-group">
+          <label>Strike Price ($)</label>
+          <input type="number" id="strike-price" value="100" step="5">
+        </div>
+        <div class="input-group">
+          <label>Volatility (%)</label>
+          <input type="number" id="volatility" value="20" step="1">
+        </div>
+        <div class="input-group">
+          <label>Time to Expiry (years)</label>
+          <input type="number" id="time-expiry" value="1" step="0.1">
+        </div>
+      </div>
+      <div class="visualization-container">
+        <canvas id="optionsChart"></canvas>
+      </div>
+      <div class="takeaways">
+        <h4>Key Takeaways</h4>
+        <ul>
+          <li>The Black-Scholes model enables pricing European options.</li>
+          <li>Options prices are highly sensitive to changes in volatility.</li>
+        </ul>
+      </div>
+      <div class="quiz">
+        <h4>Quick Quiz</h4>
+        <p>The Black-Scholes price of an option is most affected by which parameter?</p>
+        <input type="text" id="quiz-derivatives-answer" placeholder="your answer">
+        <button onclick="checkQuiz('derivatives')">Submit</button>
+        <div class="result" id="result-derivatives"></div>
+      </div>
+    </div>
+
+    <!-- Module: Fixed Income Analysis -->
+    <div class="module" id="fixedincome" style="display:none;">
+      <h2>Fixed Income &amp; Bond Valuation</h2>
+      <div class="explanation">
+        <h3>Bond Valuation</h3>
+        <p>Bond price is the present value of your future coupon payments and the face value.</p>
+        <div class="formula-box">
+          <p>\( P = \sum_{t=1}^{n} \frac{C}{(1+y)^t} + \frac{F}{(1+y)^n} \)</p>
+          <ul>
+            <li>P = Bond Price</li>
+            <li>C = Coupon payment</li>
+            <li>F = Face Value</li>
+            <li>y = Yield to maturity</li>
+            <li>n = Number of periods</li>
+          </ul>
+        </div>
+      </div>
+      <div class="calculator-grid">
+        <div class="input-group">
+          <label>Face Value ($)</label>
+          <input type="number" id="face-value" value="1000" step="100">
+        </div>
+        <div class="input-group">
+          <label>Coupon Rate (%)</label>
+          <input type="number" id="coupon-rate" value="5" step="0.1">
+        </div>
+        <div class="input-group">
+          <label>Years to Maturity</label>
+          <input type="number" id="bond-years" value="10" step="1">
+        </div>
+        <div class="input-group">
+          <label>Market Yield (%)</label>
+          <input type="number" id="bond-yield" value="6" step="0.1">
+        </div>
+      </div>
+      <div class="visualization-container">
+        <canvas id="bondChart"></canvas>
+      </div>
+      <div class="explanation">
+        <h3>Yield Curve Dynamics</h3>
+        <p>The yield curve shows interest rates across different maturities.</p>
+        <div class="formula-box">
+          <p>\( \text{Spot Rate}_t = \left(\frac{F}{P}\right)^{1/t} - 1 \)</p>
+          <ul>
+            <li>F = Future Value</li>
+            <li>P = Present Value</li>
+            <li>t = Time period</li>
+          </ul>
+        </div>
+      </div>
+      <div class="visualization-container">
+        <canvas id="yieldCurveChart"></canvas>
+      </div>
+      <div class="takeaways">
+        <h4>Key Takeaways</h4>
+        <ul>
+          <li>Bonds are highly sensitive to changes in interest rates.</li>
+          <li>The yield curve is a vital tool to understand market expectations on rates.</li>
+        </ul>
+      </div>
+      <div class="quiz">
+        <h4>Quick Quiz</h4>
+        <p>If the market yield increases, what generally happens to the bond's price?</p>
+        <input type="text" id="quiz-fixedincome-answer" placeholder="your answer">
+        <button onclick="checkQuiz('fixedincome')">Submit</button>
+        <div class="result" id="result-fixedincome"></div>
+      </div>
+    </div>
+
+    <!-- Module: Financial Ratio Analysis -->
+    <div class="module" id="ratios" style="display:none;">
+      <h2>Financial Ratio Analysis &amp; DuPont</h2>
+      <div class="explanation">
+        <h3>Key Financial Ratios</h3>
+        <p>Financial ratios help assess a company’s health and performance.</p>
+        <div class="formula-box">
+          <p>\( \text{ROE} = \frac{\text{Net Income}}{\text{Shareholders' Equity}} \)</p>
+          <p>\( \text{Debt/Equity} = \frac{\text{Total Liabilities}}{\text{Shareholders' Equity}} \)</p>
+          <p>\( \text{P/E Ratio} = \frac{\text{Market Price per Share}}{\text{Earnings per Share}} \)</p>
+        </div>
+      </div>
+      <div class="calculator-grid">
+        <div class="input-group">
+          <label>Net Income ($)</label>
+          <input type="number" id="net-income" value="500000">
+        </div>
+        <div class="input-group">
+          <label>Total Assets ($)</label>
+          <input type="number" id="total-assets" value="2500000">
+        </div>
+        <div class="input-group">
+          <label>Total Liabilities ($)</label>
+          <input type="number" id="total-liabilities" value="1500000">
+        </div>
+        <div class="input-group">
+          <label>Shareholders' Equity ($)</label>
+          <input type="number" id="equity" value="1000000">
+        </div>
+        <div class="input-group">
+          <label>Market Cap ($)</label>
+          <input type="number" id="market-cap" value="5000000">
+        </div>
+        <div class="input-group">
+          <label>Shares Outstanding</label>
+          <input type="number" id="shares-outstanding" value="1000000">
+        </div>
+      </div>
+      <div class="visualization-container">
+        <canvas id="ratiosChart"></canvas>
+      </div>
+      <div class="explanation">
+        <h3>DuPont Analysis</h3>
+        <p>Breaks down ROE into three key components:</p>
+        <div class="formula-box">
+          <p>\( \text{ROE} = \text{Profit Margin} \times \text{Asset Turnover} \times \text{Equity Multiplier} \)</p>
+          <p>\( \text{Profit Margin} = \frac{\text{Net Income}}{\text{Revenue}} \)</p>
+          <p>\( \text{Asset Turnover} = \frac{\text{Revenue}}{\text{Total Assets}} \)</p>
+          <p>\( \text{Equity Multiplier} = \frac{\text{Total Assets}}{\text{Shareholders' Equity}} \)</p>
+        </div>
+      </div>
+      <div class="takeaways">
+        <h4>Key Takeaways</h4>
+        <ul>
+          <li>The DuPont analysis deep dives into profitability.</li>
+          <li>Ratio analysis aids in comparing companies across industries.</li>
+        </ul>
+      </div>
+      <div class="quiz">
+        <h4>Quick Quiz</h4>
+        <p>Which ratio best indicates company efficiency?</p>
+        <input type="text" id="quiz-ratios-answer" placeholder="your answer">
+        <button onclick="checkQuiz('ratios')">Submit</button>
+        <div class="result" id="result-ratios"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* Navigation and Module Initialization */
+    const modules = ["overview", "tvm", "mpt", "derivatives", "fixedincome", "ratios"];
+
+    function showModule(moduleId) {
+      modules.forEach(id => {
+        document.getElementById(id).style.display = id === moduleId ? "block" : "none";
+      });
+      document.querySelectorAll('.nav-tab').forEach(tab => {
+        tab.classList.toggle("active", tab.getAttribute("data-module") === moduleId);
+      });
+      // (Re)initialize the module calculations if needed.
+      if (moduleId === "tvm") tvmCalculator.init();
+      if (moduleId === "mpt") portfolioTheory.init();
+      if (moduleId === "derivatives") derivativesCalculator.init();
+      if (moduleId === "fixedincome") fixedIncomeCalculator.init();
+      if (moduleId === "ratios") ratiosCalculator.init();
+    }
+
+    document.querySelectorAll('.nav-tab').forEach(tab => {
+      tab.addEventListener('click', (e) => {
+        e.preventDefault();
+        showModule(tab.getAttribute("data-module"));
+      });
+    });
+
+    /* TVM Calculator */
+    const tvmCalculator = {
+      chart: null,
+      init() {
+        // Attach listeners once per element
+        const tvmModule = document.querySelector("#tvm");
+        tvmModule.querySelectorAll("input").forEach(input => {
+          input.removeEventListener('input', this.updateChart);
+          input.addEventListener('input', () => this.updateChart());
+        });
+        this.updateChart();
+      },
+      calculateFV(pv, rate, n) {
+        return pv * Math.pow(1 + (rate/100), n);
+      },
+      updateChart() {
+        const pv = parseFloat(document.getElementById('tvm-pv').value);
+        const rate = parseFloat(document.getElementById('tvm-rate').value);
+        const n = parseInt(document.getElementById('tvm-n').value);
+        const labels = Array.from({length: n}, (_, i) => i + 1);
+        const data = labels.map(year => this.calculateFV(pv, rate, year));
+
+        if(this.chart) this.chart.destroy();
+
+        this.chart = new Chart(document.getElementById('tvmChart'), {
+          type: 'line',
+          data: {
+            labels: labels,
+            datasets: [{
+              label: 'Future Value Growth',
+              data: data,
+              borderColor: '#3498db',
+              backgroundColor: 'rgba(52,152,219,0.1)',
+              fill: true,
+              tension: 0.4
+            }]
+          },
+          options: {
+            responsive: true,
+            scales: {
+              y: {
+                title: { display: true, text: 'Future Value ($)' },
+                beginAtZero: true
+              },
+              x: {
+                title: { display: true, text: 'Years' }
+              }
+            }
+          }
+        });
+      }
+    };
+
+    /* Portfolio Theory Calculator */
+    const portfolioTheory = {
+      chart: null,
+      init() {
+        const module = document.querySelector("#mpt");
+        module.querySelectorAll("input").forEach(input => {
+          input.removeEventListener('input', this.updateChart);
+          input.addEventListener('input', () => this.updateChart());
+        });
+        this.updateChart();
+      },
+      calculateFrontier() {
+        const correlation = parseFloat(document.getElementById('correlation').value);
+        const rf = parseFloat(document.getElementById('risk-free').value) / 100;
+        const stock = { ret: 8, risk: 15 };
+        const bond = { ret: 4, risk: 5 };
+        const portfolios = [];
+        for(let w=0; w<=1; w+=0.01) {
+          const ret = w * stock.ret + (1-w)*bond.ret;
+          const risk = Math.sqrt(Math.pow(w*stock.risk,2) +
+                    Math.pow((1-w)*bond.risk,2) +
+                    2*w*(1-w)*stock.risk*bond.risk*correlation);
+          portfolios.push({ x: risk, y: ret });
+        }
+        const maxSharpe = portfolios.reduce((max, p) => {
+          const sharpe = (p.y - rf*100) / p.x;
+          return sharpe > max.sharpe ? { sharpe, ...p } : max;
+        }, { sharpe: 0 });
+        const cml = [];
+        for(let x=0; x<=maxSharpe.x*1.5; x+=0.5) {
+          cml.push({ x: x, y: rf*100 + ((maxSharpe.y - rf*100)/maxSharpe.x) * x });
+        }
+        return { portfolios, cml };
+      },
+      updateChart() {
+        const { portfolios, cml } = this.calculateFrontier();
+        if(this.chart) this.chart.destroy();
+        this.chart = new Chart(document.getElementById('portfolioChart'), {
+          type: 'scatter',
+          data: {
+            datasets: [
+            {
+              label: 'Efficient Frontier',
+              data: portfolios,
+              borderColor: '#2ecc71',
+              backgroundColor: 'rgba(46, 204, 113, 0.1)',
+              showLine: true,
+              pointRadius: 2
+            },
+            {
+              label: 'Capital Market Line',
+              data: cml,
+              borderColor: '#e74c3c',
+              backgroundColor: 'rgba(231,76,60,0.1)',
+              showLine: true,
+              fill: false
+            }]
+          },
+          options: {
+            responsive: true,
+            scales: {
+              x: {
+                type: 'linear',
+                title: { display: true, text: 'Risk (σ)' },
+                min: 0
+              },
+              y: {
+                title: { display: true, text: 'Return (%)' },
+                min: 0
+              }
+            }
+          }
+        });
+      }
+    };
+
+    /* Derivatives Calculator */
+    const derivativesCalculator = {
+      chart: null,
+      init() {
+        const module = document.querySelector("#derivatives");
+        module.querySelectorAll("input").forEach(input => {
+          input.removeEventListener('input', this.updateChart);
+          input.addEventListener('input', () => this.updateChart());
+        });
+        this.updateChart();
+      },
+      blackScholes(S, K, T, r, sigma) {
+        const d1 = (Math.log(S/K) + (r + sigma**2/2)*T) / (sigma * Math.sqrt(T));
+        const d2 = d1 - sigma * Math.sqrt(T);
+        return S * this.CND(d1) - K * Math.exp(-r * T) * this.CND(d2);
+      },
+      CND(x) {
+        const a1 = 0.31938153, a2 = -0.356563782, a3 = 1.781477937;
+        const a4 = -1.821255978, a5 = 1.330274429;
+        const L = Math.abs(x);
+        const K = 1 / (1 + 0.2316419 * L);
+        let cnd = 1 - 1/Math.sqrt(2*Math.PI) * Math.exp(-L*L/2) *
+          (a1*K + a2*K**2 + a3*K**3 + a4*K**4 + a5*K**5);
+        return x < 0 ? 1 - cnd : cnd;
+      },
+      updateChart() {
+        const S = parseFloat(document.getElementById('stock-price').value);
+        const K = parseFloat(document.getElementById('strike-price').value);
+        const T = parseFloat(document.getElementById('time-expiry').value);
+        const sigma = parseFloat(document.getElementById('volatility').value)/100;
+        const r = 0.02;
+        const volatilities = Array.from({length: 20}, (_, i) => i + 1);
+        const prices = volatilities.map(v => this.blackScholes(S, K, T, r, v/100));
+        if(this.chart) this.chart.destroy();
+        this.chart = new Chart(document.getElementById('optionsChart'), {
+          type: 'line',
+          data: {
+            labels: volatilities,
+            datasets: [{
+              label: 'Call Option Price',
+              data: prices,
+              borderColor: '#9b59b6',
+              backgroundColor: 'rgba(155,89,182,0.1)',
+              fill: true
+            }]
+          },
+          options: {
+            responsive: true,
+            scales: {
+              x: {
+                title: { display: true, text: 'Volatility (%)' }
+              },
+              y: {
+                title: { display: true, text: 'Option Price ($)' }
+              }
+            }
+          }
+        });
+      }
+    };
+
+    /* Fixed Income Calculator */
+    const fixedIncomeCalculator = {
+      chart: null,
+      yieldCurveChart: null,
+      init() {
+        const module = document.querySelector("#fixedincome");
+        module.querySelectorAll("input").forEach(input => {
+          input.removeEventListener('input', this.updateCharts);
+          input.addEventListener('input', () => this.updateCharts());
+        });
+        this.updateCharts();
+      },
+      calculateBondPrice() {
+        const F = parseFloat(document.getElementById('face-value').value);
+        const C = F * parseFloat(document.getElementById('coupon-rate').value) / 100;
+        const n = parseInt(document.getElementById('bond-years').value);
+        const y = parseFloat(document.getElementById('bond-yield').value) / 100;
+        let price = 0;
+        for (let t = 1; t <= n; t++) {
+          price += C / Math.pow(1 + y, t);
+        }
+        price += F / Math.pow(1 + y, n);
+        return price;
+      },
+      generateYieldCurve() {
+        const baseYield = parseFloat(document.getElementById('bond-yield').value) / 100;
+        return [1, 2, 5, 10, 30].map(years => ({
+          x: years,
+          y: (baseYield * (1 + years/30) * 100).toFixed(2)
+        }));
+      },
+      updateCharts() {
+        const yields = Array.from({length: 20}, (_, i) => 2 + i*0.5);
+        const prices = yields.map(y => {
+          document.getElementById('bond-yield').value = y;
+          return this.calculateBondPrice();
+        });
+        if(this.chart) this.chart.destroy();
+        this.chart = new Chart(document.getElementById('bondChart'), {
+          type: 'line',
+          data: {
+            labels: yields.map(y => y + '%'),
+            datasets: [{
+              label: 'Bond Price',
+              data: prices,
+              borderColor: '#e67e22',
+              backgroundColor: 'rgba(230,126,34,0.1)',
+              fill: true
+            }]
+          },
+          options: {
+            responsive: true,
+            scales: {
+              x: {
+                title: { display: true, text: 'Yield to Maturity' }
+              },
+              y: {
+                title: { display: true, text: 'Bond Price ($)' }
+              }
+            }
+          }
+        });
+        const yieldCurveData = this.generateYieldCurve();
+        if(this.yieldCurveChart) this.yieldCurveChart.destroy();
+        this.yieldCurveChart = new Chart(document.getElementById('yieldCurveChart'), {
+          type: 'line',
+          data: {
+            labels: yieldCurveData.map(d => d.x + 'Y'),
+            datasets: [{
+              label: 'Yield Curve',
+              data: yieldCurveData,
+              borderColor: '#16a085',
+              backgroundColor: 'rgba(22,160,133,0.1)',
+              fill: true
+            }]
+          },
+          options: {
+            responsive: true,
+            scales: {
+              x: {
+                title: { display: true, text: 'Maturity' }
+              },
+              y: {
+                title: { display: true, text: 'Yield (%)' }
+              }
+            }
+          }
+        });
+      }
+    };
+
+    /* Financial Ratios Calculator */
+    const ratiosCalculator = {
+      chart: null,
+      init() {
+        const module = document.querySelector("#ratios");
+        module.querySelectorAll("input").forEach(input => {
+          input.removeEventListener('input', this.updateChart);
+          input.addEventListener('input', () => this.updateChart());
+        });
+        this.updateChart();
+      },
+      calculateRatios() {
+        const netIncome = parseFloat(document.getElementById('net-income').value);
+        const totalAssets = parseFloat(document.getElementById('total-assets').value);
+        const totalLiabilities = parseFloat(document.getElementById('total-liabilities').value);
+        const equity = parseFloat(document.getElementById('equity').value);
+        const marketCap = parseFloat(document.getElementById('market-cap').value);
+        const shares = parseFloat(document.getElementById('shares-outstanding').value);
+        return {
+          roe: (netIncome / equity) * 100,
+          roa: (netIncome / totalAssets) * 100,
+          debtEquity: (totalLiabilities / equity) * 100,
+          pe: marketCap / netIncome,
+          eps: netIncome / shares
+        };
+      },
+      updateChart() {
+        const ratios = this.calculateRatios();
+        const data = {
+          labels: ['ROE (%)', 'ROA (%)', 'Debt/Equity (%)', 'P/E Ratio', 'EPS'],
+          datasets: [{
+            label: 'Financial Ratios',
+            data: [ratios.roe, ratios.roa, ratios.debtEquity, ratios.pe, ratios.eps],
+            backgroundColor: ['#3498db', '#2ecc71', '#e74c3c', '#9b59b6', '#f1c40f']
+          }]
+        };
+        if(this.chart) this.chart.destroy();
+        this.chart = new Chart(document.getElementById('ratiosChart'), {
+          type: 'bar',
+          data: data,
+          options: {
+            responsive: true,
+            scales: {
+              y: { beginAtZero: true },
+              x: { title: { display: true, text: 'Ratio Type' } }
+            }
+          }
+        });
+      }
+    };
+
+    /* Simple Quiz Checker Function */
+    function checkQuiz(module) {
+      let userAnswer, resultElem;
+      switch(module) {
+        case 'tvm':
+          userAnswer = parseFloat(document.getElementById('quiz-tvm-answer').value);
+          // Expected answer roughly: 1000*(1.05^5) = 1276.28
+          resultElem = document.getElementById('result-tvm');
+          resultElem.textContent = Math.abs(userAnswer - 1276.28) < 50 ? "Correct!" : "Try again!";
+          break;
+        case 'mpt':
+          userAnswer = document.getElementById('quiz-mpt-answer').value.toLowerCase();
+          resultElem = document.getElementById('result-mpt');
+          resultElem.textContent = userAnswer.includes("shift") ? "Correct!" : "Hint: Think in terms of asset diversification.";
+          break;
+        case 'derivatives':
+          userAnswer = document.getElementById('quiz-derivatives-answer').value.toLowerCase();
+          resultElem = document.getElementById('result-derivatives');
+          resultElem.textContent = userAnswer.includes("volatility") ? "Correct!" : "Hint: It involves the parameter that measures uncertainty.";
+          break;
+        case 'fixedincome':
+          userAnswer = document.getElementById('quiz-fixedincome-answer').value.toLowerCase();
+          resultElem = document.getElementById('result-fixedincome');
+          resultElem.textContent = userAnswer.includes("falls") || userAnswer.includes("drop") ? "Correct!" : "Hint: Bond prices move inversely to yield.";
+          break;
+        case 'ratios':
+          userAnswer = document.getElementById('quiz-ratios-answer').value.toLowerCase();
+          resultElem = document.getElementById('result-ratios');
+          resultElem.textContent = userAnswer.includes("roe") || userAnswer.includes("dupont") ? "Correct!" : "Hint: Consider the measure of overall profitability.";
+          break;
+      }
+    }
+
+    // Initialize by showing overview
+    document.addEventListener("DOMContentLoaded", () => {
+      showModule("overview");
+    });
+  </script>
+  
+  <!-- MathJax configuration (optional if additional customization is needed) -->
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] }
+    };
+  </script>
+</body>
+</html>
