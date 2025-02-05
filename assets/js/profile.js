@@ -183,6 +183,19 @@ document.addEventListener("DOMContentLoaded", () => {
     updateTimelineChart();
     alert(`Investment sold for $${saleAmount.toFixed(2)}.`);
   }
+
+  // ------------------ Simulation Loop ------------------
+  setInterval(() => {
+    const nowRealTime = Date.now();
+    const delta = nowRealTime - lastRealTime;
+    simulatedNow = new Date(simulatedNow.getTime() + delta * timeMultiplier);
+    lastRealTime = nowRealTime;
+
+    // Update investments and timeline chart based on simulated time.
+    renderInvestments();
+    updateTimelineChart();
+  }, 100);
+
   // ------------------ Storage Change Listener ------------------
   window.addEventListener("storage", () => {
     user = JSON.parse(localStorage.getItem("user")) || user;
