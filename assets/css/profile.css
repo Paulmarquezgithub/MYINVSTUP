@@ -1,97 +1,214 @@
-/* General Styles */
+/* Profile Page Styles */
+
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     color: #333;
     background: #f4f6f9;
-}
-
-header {
+  }
+  
+  header {
     background: linear-gradient(to right, #007bff, #0056b3);
     padding: 20px 0;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-header .logo img {
+  }
+  
+  header .logo img {
     height: 50px;
     display: block;
     margin: 0 auto;
-}
-
-header nav ul {
+  }
+  
+  header nav ul {
     list-style: none;
     display: flex;
     justify-content: center;
     padding: 10px 0;
     margin: 0;
-}
-
-header nav ul li {
+  }
+  
+  header nav ul li {
     margin: 0 15px;
-}
-
-header nav ul li a {
+  }
+  
+  header nav ul li a {
     text-decoration: none;
     color: white;
     font-weight: bold;
     padding: 5px 10px;
     border-radius: 4px;
     transition: background-color 0.3s ease;
-}
-
-header nav ul li a:hover, header nav ul li a.active {
+  }
+  
+  header nav ul li a:hover,
+  header nav ul li a.active {
     background: #ffcc00;
     color: #0056b3;
-}
-
-/* Profile Section */
-#profile {
+  }
+  
+  #profile {
     text-align: center;
     margin-top: 40px;
-}
-
-.profile-card {
+  }
+  
+  .profile-card {
     background: white;
     padding: 20px;
-    max-width: 400px;
-    margin: 0 auto;
+    max-width: 800px;
+    margin: 20px auto;
     border-radius: 10px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     text-align: center;
-}
-
-.avatar img {
+  }
+  
+  .avatar img {
     width: 100px;
     height: 100px;
     border-radius: 50%;
     border: 3px solid #007bff;
     margin-bottom: 15px;
-}
-
-h2 {
+  }
+  
+  h2 {
     color: #007bff;
     margin-bottom: 10px;
-}
-
-p {
+  }
+  
+  p {
     color: #555;
-}
-
-.balance {
+  }
+  
+  .balance {
     background: #f4f6f9;
     padding: 15px;
     border-radius: 5px;
     margin: 20px 0;
-}
-
-.balance h3 {
+  }
+  
+  .balance h3 {
     margin: 0;
     font-size: 1.2rem;
     color: #333;
-}
-
-#edit-profile-btn {
+  }
+  
+  /* Speed Control Buttons */
+  #speed-controls {
+    margin: 10px 0 20px;
+  }
+  #speed-controls span {
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  #speed-controls button {
+    padding: 5px 10px;
+    margin-right: 5px;
+    border: 1px solid #007bff;
+    background: #fff;
+    color: #007bff;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  #speed-controls button:hover {
+    background: #007bff;
+    color: #fff;
+  }
+  
+  /* Investments Section */
+  .investments-section {
+    margin: 20px 0;
+    text-align: left;
+  }
+  .investments-section h3 {
+    font-size: 1.1rem;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+  }
+  .investment-item {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 15px;
+    background: #fff;
+  }
+  .investment-item h4 {
+    margin: 0 0 5px;
+    font-size: 1rem;
+    color: #007bff;
+  }
+  
+  /* Detailed Investment Metrics */
+  .investment-metrics {
+    font-size: 0.9rem;
+    margin: 10px 0;
+    background: #f9f9f9;
+    border-radius: 4px;
+    padding: 8px;
+  }
+  .investment-metrics p {
+    margin: 4px 0;
+  }
+  
+  /* Progress Bar for Timeline */
+  .progress-container {
+    background: #e0e0e0;
+    border-radius: 3px;
+    overflow: hidden;
+    margin: 5px 0 10px;
+    height: 15px;
+  }
+  .progress-bar {
+    height: 100%;
+    background: #007bff;
+    width: 0%;
+    transition: width 0.5s ease;
+  }
+  
+  /* Action Buttons */
+  .action-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 5px;
+    justify-content: flex-end;
+  }
+  .action-btn {
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 0.9rem;
+  }
+  .action-btn.sell {
+    background: #dc3545;
+  }
+  
+  /* Charts Section */
+  .charts-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin: 20px 0;
+    justify-content: space-around;
+  }
+  .chart-box {
+    flex: 1 1 300px;
+    background: #fff;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  .chart-box canvas {
+    width: 100%;
+    height: 300px;
+  }
+  
+  /* Buttons */
+  #edit-profile-btn,
+  #logout-btn {
     background: #007bff;
     color: white;
     padding: 10px 20px;
@@ -99,88 +216,18 @@ p {
     border-radius: 5px;
     font-size: 1rem;
     cursor: pointer;
+    margin: 5px;
     transition: background-color 0.3s;
-}
-
-#edit-profile-btn:hover {
+  }
+  #edit-profile-btn:hover,
+  #logout-btn:hover {
     background: #0056b3;
-}
-
-/* Profile Dropdown */
-.profile-dropdown {
-    position: relative;
-    display: inline-block;
-    margin-left: auto;
-    padding-right: 15px;
-}
-
-#profile-menu-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    color: white;
-    padding: 5px 10px;
-    border-radius: 4px;
-    transition: background-color 0.3s;
-}
-
-#profile-menu-btn:hover {
-    background: rgba(255, 255, 255, 0.1);
-}
-
-#profile-menu-btn span {
-    margin-right: 10px;
-    font-weight: bold;
-}
-
-#profile-avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: 2px solid white;
-}
-
-.dropdown-menu {
-    display: none;
-    position: absolute;
-    top: 120%;
-    right: 0;
-    background: white;
-    border: 1px solid #ccc;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 4px;
-    z-index: 1000;
-    min-width: 180px;
-}
-
-.dropdown-menu a, .dropdown-menu button {
-    display: block;
-    padding: 12px 20px;
-    color: #333;
-    text-decoration: none;
-    background: none;
-    border: none;
-    text-align: left;
-    width: 100%;
-    cursor: pointer;
-    font-size: 1rem;
-}
-
-.dropdown-menu a:hover, .dropdown-menu button:hover {
-    background: #f4f6f9;
-    color: #007bff;
-}
-
-#profile-menu-btn:hover + .dropdown-menu, .dropdown-menu:hover {
-    display: block;
-}
-
-/* Footer */
-footer {
+  }
+  
+  footer {
     background: #333;
     color: white;
     text-align: center;
     padding: 20px;
-}
+    margin-top: 40px;
+  }

@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>INVSTUP - Profile</title>
   <link rel="stylesheet" href="assets/css/profile.css">
-  <script src="assets/js/profile.js" defer></script>
-  <script src="assets/js/header.js" defer></script> <!-- Added header.js -->
+  <!-- Chart.js CDN for the investment graphs -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
   <header>
@@ -26,15 +26,50 @@
         <h1>Your Profile</h1>
         <div class="profile-card">
           <div class="avatar">
-            <img src="assets/images/default-avatar.png" alt="Profile Picture">
+            <img id="profile-avatar" src="assets/images/default-avatar.png" alt="Profile Picture">
           </div>
           <h2 id="username">John Doe</h2>
           <p id="email">john.doe@example.com</p>
           <div class="balance">
             <h3>Account Balance</h3>
-            <p id="user-balance">$0.00</p>
+            <p id="user-balance">$10000.00</p>
           </div>
+
+          <!-- Simulation Speed Controls -->
+          <div id="speed-controls">
+            <span>Time Speed:</span>
+            <button data-speed="1">1x</button>
+            <button data-speed="3">3x</button>
+            <button data-speed="10">10x</button>
+            <button data-speed="100">100x</button>
+            <button data-speed="1000">1000x</button>
+          </div>
+
+          <!-- Investments Section (with detailed metrics) -->
+          <div class="investments-section">
+            <h3>Your Investments</h3>
+            <div id="investments-list">
+              <!-- Detailed investment items will be rendered here -->
+            </div>
+          </div>
+
+          <!-- Charts Section -->
+          <div class="charts-section">
+            <div class="chart-box">
+              <h3>Investment Potential Revenue</h3>
+              <canvas id="investmentChart"></canvas>
+            </div>
+            <div class="chart-box">
+              <h3>Investment Timelines</h3>
+              <canvas id="timelineChart"></canvas>
+            </div>
+          </div>
+
           <button id="edit-profile-btn">Edit Profile</button>
+          <button id="logout-btn">Logout</button>
+
+          <!-- For debugging: Button to add a test investment manually -->
+          <button id="add-test-investment">Add Test Investment</button>
         </div>
       </div>
     </section>
@@ -45,5 +80,9 @@
       <p>&copy; 2025 INVSTUP. All rights reserved.</p>
     </div>
   </footer>
+
+  <!-- Load JS at the end to ensure DOM is ready -->
+  <script src="assets/js/profile.js"></script>
+  <script src="assets/js/header.js"></script>
 </body>
 </html>

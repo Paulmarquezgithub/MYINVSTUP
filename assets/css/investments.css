@@ -11,35 +11,41 @@ body {
   color: #ffffff;
   scroll-behavior: smooth;
   padding-top: var(--header-height);
+  margin: 0;
 }
 
+/* Header now uses a black background for a more professional look.
+   A transition on opacity and background is added.
+   When hidden, pointer-events will also be disabled (set in JS). */
 header {
-  background: linear-gradient(to right, #007bff, #0056b3);
+  background: #000000;
   padding: 20px;
   display: flex;
   align-items: center;
-  justify-content: center; /* Center the content */
+  justify-content: center;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+  transition: opacity 0.6s ease, background 0.6s ease;
 }
+
 header .logo img {
   height: 60px;
-
- 
 }
 .logo {
-display: flex;
-flex-direction: column;
-align-items: center;
-gap: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
 }
-
 .logo img {
-max-width: 150px;
-border-radius: 10px;
+  max-width: 150px;
+  border-radius: 10px;
 }
-
 .logo h1 {
-font-size: 2.5rem;
-font-weight: bold;
+  font-size: 2.5rem;
+  font-weight: bold;
 }
 
 header nav ul {
@@ -48,10 +54,11 @@ header nav ul {
   justify-content: center;
   gap: 30px;
   margin-top: 10px;
+  padding: 0;
 }
 
 header nav ul li {
-  padding: 5px 10px; /* Ensure uniform padding around the links */
+  padding: 5px 10px;
 }
 
 header nav ul li a {
@@ -59,13 +66,17 @@ header nav ul li a {
   text-decoration: none;
   font-weight: bold;
   padding: 5px 10px;
+  transition: color 0.3s ease;
 }
 
-header nav ul li a:hover, header nav ul li a.active {
+header nav ul li a:hover,
+header nav ul li a.active {
   color: #ffcc00;
   text-decoration: underline;
 }
-/* Welcome Section with Animation */
+
+/* Welcome Section placed safely below the header.
+   Padding has been increased so that no content is hidden behind the header. */
 #welcome {
   padding: calc(var(--header-height) + 40px) 20px 80px;
   text-align: center;
@@ -95,12 +106,13 @@ header nav ul li a:hover, header nav ul li a.active {
   opacity: 0.9;
 }
 
-/* Investment Cards with Enhanced Hover Effects */
+/* Investment Cards */
 .investment-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
   margin-top: 3rem;
+  padding: 0 20px;
 }
 
 .investment-card {
@@ -134,6 +146,9 @@ header nav ul li a:hover, header nav ul li a.active {
 
 .investment-card:hover::before {
   opacity: 1;
+}
+.investment-card::before {
+  pointer-events: none;
 }
 
 .card-image img {
@@ -195,18 +210,15 @@ header nav ul li a:hover, header nav ul li a.active {
   text-align: center;
   background: var(--primary-gradient);
   border: none;
-  border-radius: 8px;
+  border-radius: 20px;
   color: white;
   font-weight: 600;
   transition: opacity 0.3s ease;
-}
-
-.btn:hover {
-  opacity: 0.9;
   cursor: pointer;
+  pointer-events: auto;
 }
 
-/* Scroll Effects */
+/* Scroll & Animation Effects */
 [data-scroll] {
   opacity: 0;
   transform: translateY(30px);
@@ -218,15 +230,6 @@ header nav ul li a:hover, header nav ul li a.active {
   transform: translateY(0);
 }
 
-/* Gradient Text Effects */
-h1, h2, h3 {
-  background: linear-gradient(45deg, #fff, #88c0ff);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-/* New Scroll-Triggered Animations */
 @keyframes scaleIn {
   from {
     transform: scale(0.9);
