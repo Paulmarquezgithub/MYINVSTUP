@@ -157,7 +157,6 @@ document.addEventListener("DOMContentLoaded", () => {
     investments.splice(index, 1);
     localStorage.setItem("investments", JSON.stringify(investments));
     renderInvestments();
-    updateTimelineChart();
     alert(`Redeemed $${redemptionAmount.toFixed(2)} (principal + accrued interest).`);
   }
 
@@ -180,7 +179,6 @@ document.addEventListener("DOMContentLoaded", () => {
     investments.splice(index, 1);
     localStorage.setItem("investments", JSON.stringify(investments));
     renderInvestments();
-    updateTimelineChart();
     alert(`Investment sold for $${saleAmount.toFixed(2)}.`);
   }
 
@@ -192,8 +190,6 @@ document.addEventListener("DOMContentLoaded", () => {
     lastRealTime = nowRealTime;
 
     // Update investments and timeline chart based on simulated time.
-    renderInvestments();
-    updateTimelineChart();
   }, 100);
 
   // ------------------ Storage Change Listener ------------------
@@ -202,8 +198,6 @@ document.addEventListener("DOMContentLoaded", () => {
     user.balance = Number(user.balance);
     updateProfileDisplay();
     renderInvestments();
-    updateRevenueChart();
-    updateTimelineChart();
   });
 
   // ------------------ Test Investment Button (for development) ------------------
@@ -222,13 +216,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     localStorage.setItem("investments", JSON.stringify(investments));
     renderInvestments();
-    updateRevenueChart();
-    updateTimelineChart();
     alert("Test investment added.");
   });
 
   // ------------------ Initial Rendering ------------------
   renderInvestments();
-  updateRevenueChart();
-  updateTimelineChart();
 });
