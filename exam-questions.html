@@ -3,514 +3,255 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>INVSTUP - Exam Questions</title>
+  <title>INVSTUP – Final Quiz</title>
   <style>
-    /* RESET & BASE STYLES */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      background: #f4f7f8;
-      color: #333;
-      line-height: 1.6;
-      padding-bottom: 40px;
-    }
-    .container {
-      width: 90%;
-      max-width: 1200px;
-      margin: 20px auto;
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-      overflow: hidden;
-    }
-    header {
-      text-align: center;
-      padding: 20px;
-      background: #001f3f;
-      color: #fff;
-    }
-    header h1 {
-      font-size: 2rem;
-      margin-bottom: 10px;
-    }
-    header p {
-      font-size: 1rem;
-    }
-    section.module-intro {
-      padding: 15px 20px;
-      background: #e8f1f9;
-      border-left: 5px solid #007bff;
-    }
-    section.module-intro h2 {
-      margin-bottom: 10px;
-      color: #007bff;
-    }
-    section.module-intro ul {
-      list-style: disc;
-      margin-left: 20px;
-    }
-    section.final-quiz {
-      padding: 20px;
-    }
-    section.final-quiz h2 {
-      text-align: center;
-      margin-bottom: 20px;
-      color: #007bff;
-    }
-    form {
-      margin-top: 10px;
-    }
-    form .question {
-      margin-bottom: 25px;
-      padding: 15px;
-      border: 1px solid #dedede;
-      border-radius: 5px;
-      background: #fafafa;
-      transition: transform 0.3s ease;
-    }
-    form .question:hover {
-      transform: scale(1.01);
-    }
-    form .question h3 {
-      font-size: 1.1rem;
-      margin-bottom: 10px;
-    }
-    form .options label {
-      display: block;
-      margin-bottom: 5px;
-      cursor: pointer;
-    }
-    form .options input[type="radio"] {
-      margin-right: 8px;
-    }
-    .quiz-submit {
-      display: block;
-      width: 200px;
-      margin: 30px auto;
-      padding: 12px;
-      background: #007bff;
-      color: #fff;
-      border: none;
-      border-radius: 25px;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-    .quiz-submit:hover {
-      background: #0056b3;
-    }
-    .quiz-result {
-      text-align: center;
-      font-size: 1.2rem;
-      margin-top: 20px;
-      padding: 10px;
-      color: #001f3f;
-    }
-    /* OVERLAYS FOR PASS/FAIL */
+    /* RESET & BASE */
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html,body { height:100%; }
+    body { font-family:'Helvetica Neue',Helvetica,Arial,sans-serif; background:#f4f7f8; color:#333; }
+    .hidden { display:none!important; }
+    .container { width:90%; max-width:900px; margin:40px auto; background:#fff; border-radius:8px; box-shadow:0 3px 10px rgba(0,0,0,.1); overflow:hidden; }
+    header { text-align:center; background:#001f3f; color:#fff; padding:20px; }
+    section { padding:20px; }
+    .module-intro { background:#e8f1f9; border-left:5px solid #007bff; }
+    .module-intro h2 { color:#007bff; margin-bottom:10px; }
+    .module-intro ul { margin-left:20px; list-style:disc; }
+    .final-quiz h2 { text-align:center; color:#007bff; margin-bottom:20px; }
+
+    /* QUIZ */
+    form .question { margin-bottom:20px; padding:15px; border:1px solid #dedede; border-radius:5px; background:#fafafa; }
+    form .question h3 { margin-bottom:10px; font-size:1.1rem; }
+    form .options label { display:block; margin-bottom:6px; cursor:pointer; }
+    form .options input { margin-right:8px; }
+    .quiz-submit { display:block; width:180px; margin:30px auto; padding:12px; background:#007bff; color:#fff; border:none; border-radius:25px; font-size:1rem; cursor:pointer; }
+    .quiz-submit:disabled { background:#999; cursor:default; }
+    .quiz-result { text-align:center; margin-top:20px; font-size:1.2rem; }
+
+    /* OVERLAYS */
     .overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 9999;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      color: #fff;
-      font-size: 2rem;
-      text-align: center;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.5s ease;
+      position:fixed; top:0; left:0; width:100%; height:100%;
+      background:rgba(0,0,0,0.75); display:flex; align-items:center; justify-content:center; flex-direction:column;
+      color:#fff; text-align:center; padding:20px; z-index:9999; overflow-y:auto;
     }
-    .overlay.active {
-      opacity: 1;
-      pointer-events: all;
-    }
-    .overlay.pass {
-      background: rgba(0, 123, 0, 0.9);
-    }
-    .overlay.fail {
-      background: rgba(123, 0, 0, 0.9);
-    }
-    .overlay button {
-      margin-top: 20px;
-      padding: 10px 20px;
-      font-size: 1rem;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    .overlay.pass button {
-      background: #fff;
-      color: #007bff;
-    }
-    .overlay.fail button {
-      background: #fff;
-      color: #7b0000;
-    }
-    /* CONFETTI ANIMATION */
-    .confetti-piece {
-      position: fixed;
-      width: 10px;
-      height: 10px;
-      background-color: red;
-      opacity: 0.8;
-      z-index: 10000;
-      animation: confetti-fall 3s linear infinite;
-    }
-    @keyframes confetti-fall {
-      0% {
-        transform: translateY(-100vh) rotate(0deg);
-      }
-      100% {
-        transform: translateY(100vh) rotate(360deg);
-      }
-    }
-    /* RESPONSIVE */
-    @media(max-width: 768px) {
-      .container {
-        width: 95%;
-      }
-      header h1 {
-        font-size: 1.5rem;
-      }
-      form .question h3 {
-        font-size: 1rem;
-      }
-    }
+    .overlay.hidden { display:none; }
+    .overlay input { padding:10px; font-size:1rem; border:none; border-radius:5px; width:100%; max-width:260px; margin-top:10px; }
+    .overlay button { margin-top:20px; padding:10px 20px; font-size:1rem; border:none; border-radius:5px; cursor:pointer; }
+    #nameOverlay button { background:#FFC107; color:#001f3f; }
+    #failOverlay { background:rgba(123,0,0,0.9); }
+    #failOverlay button { background:#fff; color:#7b0000; }
   </style>
 </head>
 <body>
-  <div class="container">
+
+  <!-- 1) NAME OVERLAY -->
+  <div id="nameOverlay" class="overlay">
+    <h1>Welcome to the Final Quiz</h1>
+    <p>Please enter your full name to begin:</p>
+    <input id="userNameInput" type="text" placeholder="Your Full Name" aria-label="Your full name">
+    <button id="startButton">Start Quiz</button>
+  </div>
+
+  <!-- 2) QUIZ CONTAINER -->
+  <div id="mainContainer" class="container hidden">
     <header>
       <h1>Advanced Financial Analytics Course</h1>
-      <p>
-        This course is designed to help you master key financial concepts and quantitative methods used in the INVSTUP examinations and financial analysis. Each module provides conceptual explanations, interactive calculators, live charts, and quizzes to reinforce your learning.
-      </p>
+      <p>Master key financial concepts used in the INVSTUP exams. Complete the modules, then take the Final Quiz!</p>
     </header>
 
     <section class="module-intro">
       <h2>Course Modules</h2>
       <ul>
-        <li><strong>Time Value of Money</strong>: Learn how money grows over time.</li>
-        <li><strong>Portfolio Theory</strong>: Understand risk-return tradeoffs and efficient frontiers.</li>
-        <li><strong>Derivatives</strong>: Explore options pricing with the Black-Scholes model.</li>
-        <li><strong>Fixed Income</strong>: Analyze bond pricing and yield curves.</li>
-        <li><strong>Financial Ratios</strong>: Interpret company performance using ratios and DuPont analysis.</li>
-        <li><strong>Advanced Topics</strong>: Dive into portfolio management, financial reporting, and more.</li>
-        <li><strong>Foundations, Budgeting, Investing, Industry Outlook</strong>: Build your financial acumen from the ground up.</li>
+        <li><strong>Time Value of Money</strong>: Learn how money grows.</li>
+        <li><strong>Portfolio Theory</strong>: Risk‑return tradeoffs.</li>
+        <li><strong>Derivatives</strong>: Option pricing.</li>
+        <li><strong>Fixed Income</strong>: Bonds & yields.</li>
+        <li><strong>Financial Ratios</strong>: Company performance.</li>
+        <li><strong>Advanced Topics</strong>: Portfolio management.</li>
+        <li><strong>Foundations & Outlook</strong>: Budgeting, investing, industry trends.</li>
       </ul>
     </section>
 
     <section class="final-quiz">
-      <h2>Final Quiz</h2>
-      <form id="exam-form">
-        <!-- 20 questions as before -->
-        <!-- Question 1: Time Value of Money -->
+      <h2>Final Quiz (20 Questions)</h2>
+      <form id="exam-form" novalidate>
+        <!-- Q1 -->
         <div class="question">
           <h3>1. What principle underlies the concept of Time Value of Money?</h3>
           <div class="options">
-            <label>
-              <input type="radio" name="q1" value="1"> Money today is worth more than money tomorrow.
-            </label>
-            <label>
-              <input type="radio" name="q1" value="0"> Money tomorrow is always worth more.
-            </label>
-            <label>
-              <input type="radio" name="q1" value="0"> Money has no time value.
-            </label>
+            <label><input type="radio" name="q1" value="1" required> Money today is worth more than money tomorrow.</label>
+            <label><input type="radio" name="q1" value="0"> Money tomorrow is always worth more.</label>
+            <label><input type="radio" name="q1" value="0"> Money has no time value.</label>
           </div>
         </div>
-        <!-- Question 2: Compound Interest -->
+        <!-- Q2 -->
         <div class="question">
           <h3>2. Compound interest is best described as:</h3>
           <div class="options">
-            <label>
-              <input type="radio" name="q2" value="1"> Interest on interest.
-            </label>
-            <label>
-              <input type="radio" name="q2" value="0"> Interest only on the principal.
-            </label>
-            <label>
-              <input type="radio" name="q2" value="0"> Simple interest applied over time.
-            </label>
+            <label><input type="radio" name="q2" value="1" required> Interest on interest.</label>
+            <label><input type="radio" name="q2" value="0"> Interest only on the principal.</label>
+            <label><input type="radio" name="q2" value="0"> Simple interest applied over time.</label>
           </div>
         </div>
-        <!-- Question 3: Portfolio Theory -->
+        <!-- Q3 -->
         <div class="question">
           <h3>3. What does an efficient frontier represent in portfolio theory?</h3>
           <div class="options">
-            <label>
-              <input type="radio" name="q3" value="1"> The set of optimal portfolios offering the best risk-return tradeoffs.
-            </label>
-            <label>
-              <input type="radio" name="q3" value="0"> A collection of all portfolios that include risky assets.
-            </label>
-            <label>
-              <input type="radio" name="q3" value="0"> Portfolios that minimize risk without regard to return.
-            </label>
+            <label><input type="radio" name="q3" value="1" required> The set of optimal portfolios offering the best risk‑return tradeoffs.</label>
+            <label><input type="radio" name="q3" value="0"> A collection of all portfolios that include risky assets.</label>
+            <label><input type="radio" name="q3" value="0"> Portfolios that minimize risk without regard to return.</label>
           </div>
         </div>
-        <!-- Question 4: Diversification -->
+        <!-- Q4 -->
         <div class="question">
           <h3>4. Diversification in a portfolio primarily helps to:</h3>
           <div class="options">
-            <label>
-              <input type="radio" name="q4" value="1"> Reduce unsystematic risk.
-            </label>
-            <label>
-              <input type="radio" name="q4" value="0"> Eliminate all market risk.
-            </label>
-            <label>
-              <input type="radio" name="q4" value="0"> Increase portfolio volatility.
-            </label>
+            <label><input type="radio" name="q4" value="1" required> Reduce unsystematic risk.</label>
+            <label><input type="radio" name="q4" value="0"> Eliminate all market risk.</label>
+            <label><input type="radio" name="q4" value="0"> Increase portfolio volatility.</label>
           </div>
         </div>
-        <!-- Question 5: Derivatives -->
+        <!-- Q5 -->
         <div class="question">
-          <h3>5. What is the primary purpose of the Black-Scholes model?</h3>
+          <h3>5. What is the primary purpose of the Black‑Scholes model?</h3>
           <div class="options">
-            <label>
-              <input type="radio" name="q5" value="1"> Options pricing.
-            </label>
-            <label>
-              <input type="radio" name="q5" value="0"> Bond valuation.
-            </label>
-            <label>
-              <input type="radio" name="q5" value="0"> Portfolio optimization.
-            </label>
+            <label><input type="radio" name="q5" value="1" required> Options pricing.</label>
+            <label><input type="radio" name="q5" value="0"> Bond valuation.</label>
+            <label><input type="radio" name="q5" value="0"> Portfolio optimization.</label>
           </div>
         </div>
-        <!-- Question 6: The Greeks -->
+        <!-- Q6 -->
         <div class="question">
           <h3>6. In option pricing, "the Greeks" refer to:</h3>
           <div class="options">
-            <label>
-              <input type="radio" name="q6" value="1"> Sensitivities to underlying variables.
-            </label>
-            <label>
-              <input type="radio" name="q6" value="0"> Random Greek letters with no significance.
-            </label>
-            <label>
-              <input type="radio" name="q6" value="0"> Types of exotic options.
-            </label>
+            <label><input type="radio" name="q6" value="1" required> Sensitivities to underlying variables.</label>
+            <label><input type="radio" name="q6" value="0"> Random Greek letters with no significance.</label>
+            <label><input type="radio" name="q6" value="0"> Types of exotic options.</label>
           </div>
         </div>
-        <!-- Question 7: Fixed Income -->
+        <!-- Q7 -->
         <div class="question">
           <h3>7. Bond pricing is inversely related to:</h3>
           <div class="options">
-            <label>
-              <input type="radio" name="q7" value="1"> Interest rates.
-            </label>
-            <label>
-              <input type="radio" name="q7" value="0"> Time to maturity.
-            </label>
-            <label>
-              <input type="radio" name="q7" value="0"> Coupon rate.
-            </label>
+            <label><input type="radio" name="q7" value="1" required> Interest rates.</label>
+            <label><input type="radio" name="q7" value="0"> Time to maturity.</label>
+            <label><input type="radio" name="q7" value="0"> Coupon rate.</label>
           </div>
         </div>
-        <!-- Question 8: Yield Curve -->
+        <!-- Q8 -->
         <div class="question">
           <h3>8. Yield curve analysis is important because it provides insight into:</h3>
           <div class="options">
-            <label>
-              <input type="radio" name="q8" value="1"> Future interest rate changes.
-            </label>
-            <label>
-              <input type="radio" name="q8" value="0"> Historical stock performance.
-            </label>
-            <label>
-              <input type="radio" name="q8" value="0"> Dividend growth patterns.
-            </label>
+            <label><input type="radio" name="q8" value="1" required> Future interest rate changes.</label>
+            <label><input type="radio" name="q8" value="0"> Historical stock performance.</label>
+            <label><input type="radio" name="q8" value="0"> Dividend growth patterns.</label>
           </div>
         </div>
-        <!-- Question 9: DuPont Analysis -->
+        <!-- Q9 -->
         <div class="question">
           <h3>9. DuPont analysis is used to decompose which financial metric?</h3>
           <div class="options">
-            <label>
-              <input type="radio" name="q9" value="1"> Return on Equity.
-            </label>
-            <label>
-              <input type="radio" name="q9" value="0"> Price-to-Earnings ratio.
-            </label>
-            <label>
-              <input type="radio" name="q9" value="0"> Debt-to-Equity ratio.
-            </label>
+            <label><input type="radio" name="q9" value="1" required> Return on Equity.</label>
+            <label><input type="radio" name="q9" value="0"> Price-to-Earnings ratio.</label>
+            <label><input type="radio" name="q9" value="0"> Debt-to-Equity ratio.</label>
           </div>
         </div>
-        <!-- Question 10: Current Ratio -->
+        <!-- Q10 -->
         <div class="question">
           <h3>10. A high current ratio generally indicates:</h3>
           <div class="options">
-            <label>
-              <input type="radio" name="q10" value="1"> Strong short-term liquidity.
-            </label>
-            <label>
-              <input type="radio" name="q10" value="0"> Low liquidity.
-            </label>
-            <label>
-              <input type="radio" name="q10" value="0"> High profitability.
-            </label>
+            <label><input type="radio" name="q10" value="1" required> Strong short-term liquidity.</label>
+            <label><input type="radio" name="q10" value="0"> Low liquidity.</label>
+            <label><input type="radio" name="q10" value="0"> High profitability.</label>
           </div>
         </div>
-        <!-- Question 11: Volatility in Options -->
+        <!-- Q11 -->
         <div class="question">
           <h3>11. In option pricing, volatility is best described as:</h3>
           <div class="options">
-            <label>
-              <input type="radio" name="q11" value="1"> A measure of risk or price fluctuation.
-            </label>
-            <label>
-              <input type="radio" name="q11" value="0"> A fixed percentage.
-            </label>
-            <label>
-              <input type="radio" name="q11" value="0"> An insignificant factor.
-            </label>
+            <label><input type="radio" name="q11" value="1" required> A measure of risk or price fluctuation.</label>
+            <label><input type="radio" name="q11" value="0"> A fixed percentage.</label>
+            <label><input type="radio" name="q11" value="0"> An insignificant factor.</label>
           </div>
         </div>
-        <!-- Question 12: Portfolio Management -->
+        <!-- Q12 -->
         <div class="question">
           <h3>12. Which of the following is NOT a key element in portfolio management?</h3>
           <div class="options">
-            <label>
-              <input type="radio" name="q12" value="0"> Diversification strategy.
-            </label>
-            <label>
-              <input type="radio" name="q12" value="0"> Risk evaluation.
-            </label>
-            <label>
-              <input type="radio" name="q12" value="1"> Ignoring diversification.
-            </label>
+            <label><input type="radio" name="q12" value="0" required> Diversification strategy.</label>
+            <label><input type="radio" name="q12" value="0"> Risk evaluation.</label>
+            <label><input type="radio" name="q12" value="1"> Ignoring diversification.</label>
           </div>
         </div>
-        <!-- Question 13: Financial Reporting -->
+        <!-- Q13 -->
         <div class="question">
           <h3>13. Financial Reporting often utilizes:</h3>
           <div class="options">
-            <label>
-              <input type="radio" name="q13" value="1"> DuPont analysis to break down profitability.
-            </label>
-            <label>
-              <input type="radio" name="q13" value="0"> Random guesswork.
-            </label>
-            <label>
-              <input type="radio" name="q13" value="0"> Unsystematic methods.
-            </label>
+            <label><input type="radio" name="q13" value="1" required> DuPont analysis to break down profitability.</label>
+            <label><input type="radio" name="q13" value="0"> Random guesswork.</label>
+            <label><input type="radio" name="q13" value="0"> Unsystematic methods.</label>
           </div>
         </div>
-        <!-- Question 14: Key Liquidity Ratio -->
+        <!-- Q14 -->
         <div class="question">
           <h3>14. Which ratio is most commonly used to assess a company's liquidity?</h3>
           <div class="options">
-            <label>
-              <input type="radio" name="q14" value="1"> Current ratio.
-            </label>
-            <label>
-              <input type="radio" name="q14" value="0"> Debt-to-equity ratio.
-            </label>
-            <label>
-              <input type="radio" name="q14" value="0"> Price-to-earnings ratio.
-            </label>
+            <label><input type="radio" name="q14" value="1" required> Current ratio.</label>
+            <label><input type="radio" name="q14" value="0"> Debt-to-equity ratio.</label>
+            <label><input type="radio" name="q14" value="0"> Price-to-earnings ratio.</label>
           </div>
         </div>
-        <!-- Question 15: Budgeting -->
+        <!-- Q15 -->
         <div class="question">
           <h3>15. Budgeting is important because:</h3>
           <div class="options">
-            <label>
-              <input type="radio" name="q15" value="1"> It helps in financial planning and control.
-            </label>
-            <label>
-              <input type="radio" name="q15" value="0"> It is only relevant for small companies.
-            </label>
-            <label>
-              <input type="radio" name="q15" value="0"> It discourages spending.
-            </label>
+            <label><input type="radio" name="q15" value="1" required> It helps in financial planning and control.</label>
+            <label><input type="radio" name="q15" value="0"> It is only relevant for small companies.</label>
+            <label><input type="radio" name="q15" value="0"> It discourages spending.</label>
           </div>
         </div>
-        <!-- Question 16: Investing -->
+        <!-- Q16 -->
         <div class="question">
           <h3>16. Investing is best described as:</h3>
           <div class="options">
-            <label>
-              <input type="radio" name="q16" value="1"> Allocating resources with the expectation of future return.
-            </label>
-            <label>
-              <input type="radio" name="q16" value="0"> Spending money impulsively.
-            </label>
-            <label>
-              <input type="radio" name="q16" value="0"> Avoiding risk entirely.
-            </label>
+            <label><input type="radio" name="q16" value="1" required> Allocating resources with the expectation of future return.</label>
+            <label><input type="radio" name="q16" value="0"> Spending money impulsively.</label>
+            <label><input type="radio" name="q16" value="0"> Avoiding risk entirely.</label>
           </div>
         </div>
-        <!-- Question 17: Foundations in Finance -->
+        <!-- Q17 -->
         <div class="question">
           <h3>17. Foundations in finance emphasize the importance of:</h3>
           <div class="options">
-            <label>
-              <input type="radio" name="q17" value="1"> Building strong financial principles.
-            </label>
-            <label>
-              <input type="radio" name="q17" value="0"> Disregarding basic theory.
-            </label>
-            <label>
-              <input type="radio" name="q17" value="0"> Chasing quick profits.
-            </label>
+            <label><input type="radio" name="q17" value="1" required> Building strong financial principles.</label>
+            <label><input type="radio" name="q17" value="0"> Disregarding basic theory.</label>
+            <label><input type="radio" name="q17" value="0"> Chasing quick profits.</label>
           </div>
         </div>
-        <!-- Question 18: Industry Outlook -->
+        <!-- Q18 -->
         <div class="question">
           <h3>18. Industry outlook analysis helps investors to:</h3>
           <div class="options">
-            <label>
-              <input type="radio" name="q18" value="1"> Anticipate trends and market shifts.
-            </label>
-            <label>
-              <input type="radio" name="q18" value="0"> Focus solely on historical data.
-            </label>
-            <label>
-              <input type="radio" name="q18" value="0"> Ignore global economic indicators.
-            </label>
+            <label><input type="radio" name="q18" value="1" required> Anticipate trends and market shifts.</label>
+            <label><input type="radio" name="q18" value="0"> Focus solely on historical data.</label>
+            <label><input type="radio" name="q18" value="0"> Ignore global economic indicators.</label>
           </div>
         </div>
-        <!-- Question 19: Efficient Frontier Significance -->
+        <!-- Q19 -->
         <div class="question">
           <h3>19. What is the significance of the Efficient Frontier?</h3>
           <div class="options">
-            <label>
-              <input type="radio" name="q19" value="1"> It identifies optimal portfolios balancing risk and return.
-            </label>
-            <label>
-              <input type="radio" name="q19" value="0"> It shows only the highest return portfolios.
-            </label>
-            <label>
-              <input type="radio" name="q19" value="0"> It disregards portfolio volatility.
-            </label>
+            <label><input type="radio" name="q19" value="1" required> It identifies optimal portfolios balancing risk and return.</label>
+            <label><input type="radio" name="q19" value="0"> It shows only the highest return portfolios.</label>
+            <label><input type="radio" name="q19" value="0"> It disregards portfolio volatility.</label>
           </div>
         </div>
-        <!-- Question 20: Interactive Tools Purpose -->
+        <!-- Q20 -->
         <div class="question">
           <h3>20. Interactive financial tools in this course aim to:</h3>
           <div class="options">
-            <label>
-              <input type="radio" name="q20" value="1"> Enhance learning by providing hands-on experience.
-            </label>
-            <label>
-              <input type="radio" name="q20" value="0"> Overwhelm students with too many details.
-            </label>
-            <label>
-              <input type="radio" name="q20" value="0"> Replace theoretical learning entirely.
-            </label>
+            <label><input type="radio" name="q20" value="1" required> Enhance learning by providing hands-on experience.</label>
+            <label><input type="radio" name="q20" value="0"> Overwhelm students with too many details.</label>
+            <label><input type="radio" name="q20" value="0"> Replace theoretical learning entirely.</label>
           </div>
         </div>
 
@@ -520,84 +261,66 @@
     </section>
   </div>
 
-  <!-- Overlays -->
-  <div id="passOverlay" class="overlay pass">
-    <div id="passMessage">Congratulations, You Passed!</div>
-    <button onclick="closeOverlay()">Close</button>
-  </div>
-  <div id="failOverlay" class="overlay fail">
-    <div id="failMessage">Sorry, You Did Not Pass. Please Try Again!</div>
-    <button onclick="closeOverlay()">Close</button>
+  <!-- 3) FAIL OVERLAY -->
+  <div id="failOverlay" class="overlay hidden">
+    <h1>Oh no!</h1>
+    <p>You did not pass. Please try again later.</p>
+    <button id="failClose">Close</button>
   </div>
 
   <script>
-    // Function to create fun confetti pieces
-    function createConfetti() {
-      const colors = ['#FFC107', '#FF5722', '#4CAF50', '#2196F3', '#9C27B0'];
-      for (let i = 0; i < 100; i++) {
-        const confetti = document.createElement('div');
-        confetti.className = 'confetti-piece';
-        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-        confetti.style.left = Math.random() * 100 + '%';
-        confetti.style.animationDelay = Math.random() * 3 + 's';
-        document.body.appendChild(confetti);
-        // Remove confetti after animation to avoid build-up
-        setTimeout(() => {
-          confetti.remove();
-        }, 3000);
-      }
-    }
+    document.addEventListener('DOMContentLoaded', () => {
+      let userName = '';
+      const nameOverlay   = document.getElementById('nameOverlay');
+      const mainContainer = document.getElementById('mainContainer');
+      const failOverlay   = document.getElementById('failOverlay');
+      const startBtn      = document.getElementById('startButton');
+      const nameInput     = document.getElementById('userNameInput');
+      const examForm      = document.getElementById('exam-form');
+      const resultDiv     = document.getElementById('result');
+      const failClose     = document.getElementById('failClose');
+      const TOTAL_Q       = 20;
 
-    // Close any open overlay and reset the quiz scroll position
-    function closeOverlay() {
-      document.getElementById('passOverlay').classList.remove('active');
-      document.getElementById('failOverlay').classList.remove('active');
-      window.scrollTo(0, 0);
-    }
+      function show(el){ el.classList.remove('hidden'); }
+      function hide(el){ el.classList.add('hidden'); }
 
-    // Handle form submission
-    document.getElementById("exam-form").addEventListener("submit", function(e) {
-      e.preventDefault();
-      const totalQuestions = 20;
-      let score = 0;
-      let unanswered = [];
+      // démarrer le quiz
+      startBtn.addEventListener('click', () => {
+        const n = nameInput.value.trim();
+        if (!n) return alert('Please enter your name.');
+        userName = n;
+        hide(nameOverlay);
+        show(mainContainer);
+      });
 
-      for (let i = 1; i <= totalQuestions; i++) {
-        const radios = document.getElementsByName("q" + i);
-        let answered = false;
-        for (let radio of radios) {
-          if (radio.checked) {
-            answered = true;
-            score += parseInt(radio.value);
-          }
+      // fermer fail overlay
+      failClose.addEventListener('click', () => {
+        hide(failOverlay);
+      });
+
+      // soumission du quiz
+      examForm.addEventListener('submit', e => {
+        e.preventDefault();
+        if (!examForm.checkValidity()) {
+          examForm.reportValidity();
+          return;
         }
-        if (!answered) {
-          unanswered.push(i);
+        let score = 0;
+        for (let i = 1; i <= TOTAL_Q; i++) {
+          score += +examForm[`q${i}`].value;
         }
-      }
+        const pct = score / TOTAL_Q * 100;
+        resultDiv.innerHTML = `<p>You scored ${score}/${TOTAL_Q} (${pct.toFixed(1)}%).</p>`;
+        examForm.querySelector('.quiz-submit').disabled = true;
 
-      if (unanswered.length > 0) {
-        alert("Please answer all questions. Unanswered: " + unanswered.join(", "));
-        return;
-      }
-
-      const percentage = (score / totalQuestions) * 100;
-      const resultDiv = document.getElementById("result");
-      resultDiv.innerHTML = `<p>You scored ${score} out of ${totalQuestions} (${percentage.toFixed(2)}%).</p>`;
-
-      // 80% or higher is a pass
-      if (percentage >= 80) {
-        resultDiv.innerHTML += `<p style="color: green;">You Passed!</p>`;
-        // Activate pass overlay and confetti animation
-        const passOverlay = document.getElementById("passOverlay");
-        passOverlay.classList.add("active");
-        createConfetti();  // fun confetti effects
-      } else {
-        resultDiv.innerHTML += `<p style="color: red;">You Did Not Pass. Try Again!</p>`;
-        document.getElementById("failOverlay").classList.add("active");
-      }
-
-      window.scrollTo(0, 0);
+        if (pct >= 80) {
+          const today = encodeURIComponent(new Date().toLocaleDateString());
+          const name  = encodeURIComponent(userName);
+          window.location.href = `Certificate.html?name=${name}&date=${today}`;
+        } else {
+          show(failOverlay);
+        }
+      });
     });
   </script>
 </body>

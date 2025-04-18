@@ -3,559 +3,478 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Finance Story: The Journey to Financial Mastery</title>
+  <title>INVST UP: Journey to Financial Mastery</title>
+  <!-- Google Fonts & FontAwesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
   <style>
     :root {
-      --primary-color: #2c3e50;
-      --secondary-color: #3498db;
-      --accent-color: #e74c3c;
-      --background-color: #ecf0f1;
-      --light-gray: #f1f2f6;
+      --primary: #2c3e50;
+      --secondary: #3498db;
+      --accent: #e74c3c;
+      --bg: #ecf0f1;
+      --card: #f1f2f6;
+      --text: #2c3e50;
     }
-    
-    * {
-      box-sizing: border-box;
+    body.dark {
+      --bg: #2b2b2b;
+      --card: #3a3a3a;
+      --text: #f0f0f0;
     }
-    
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      margin: 0;
-      font-family: "Segoe UI", sans-serif;
-      background: var(--background-color);
-      color: var(--primary-color);
-      overflow-x: hidden;
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
       line-height: 1.6;
+      overflow-x: hidden;
     }
-    
     header {
-      background: white;
+      position: sticky; top: 0; z-index:100;
+      background: var(--card);
       padding: 15px 20px;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-      position: sticky;
-      top: 0;
-      z-index: 100;
+      display: flex; align-items:center; justify-content: space-between;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
-    
     header h1 {
-      margin: 0;
-      font-size: 1.8em;
-      color: var(--secondary-color);
-      text-align: center;
+      font-size:1.6em; color: var(--secondary);
     }
-    
-    .tabs {
-      display: flex;
-      justify-content: center;
-      margin-top: 10px;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-    
-    .tab {
-      background: white;
-      padding: 10px 20px;
-      border: 2px solid var(--secondary-color);
-      border-radius: 30px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: background 0.3s, color 0.3s;
-    }
-    
-    .tab:hover, .tab:focus, .tab.active {
-      background: var(--secondary-color);
-      color: white;
-      outline: none;
-    }
-    
-    main {
-      max-width: 1000px;
-      margin: 20px auto;
-      padding: 10px;
-    }
-    
-    .tab-content {
-      display: none;
-      animation: fadeIn 0.7s ease-out forwards;
-    }
-    
-    .tab-content.active {
-      display: block;
-    }
-    
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    
-    section {
-      margin-bottom: 60px;
-      padding: 30px 20px;
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-      margin-top: 20px;
-    }
-    
-    section h2 {
-      color: var(--secondary-color);
-      margin-top: 0;
-    }
-    
-    .content-box {
-      background: var(--light-gray);
-      padding: 20px;
-      border-radius: 10px;
-      margin: 15px 0;
-    }
-    
-    /* Financial Journey SVG Animation */
-    .financial-path {
-      margin: 30px auto;
-      max-width: 800px;
-      position: relative;
-    }
-    
-    .financial-path svg {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-    
-    /* Chart Container (Budgeting Chapter) */
-    .chart-container {
-      position: relative;
-      max-width: 800px;
-      margin: 30px auto;
-      height: 300px;
-    }
-    
-    /* Quiz Section */
-    .quiz-section {
-      background: var(--light-gray);
-      padding: 30px;
-      border-radius: 12px;
-      margin: 30px 0;
-      text-align: center;
-    }
-    
-    .quiz-section h3 {
-      color: var(--accent-color);
-      margin-top: 0;
-    }
-    
-    .quiz-section input[type="text"] {
-      width: 80%;
-      max-width: 400px;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 1em;
-      margin-bottom: 10px;
-    }
-    
-    .quiz-section button {
-      margin-top: 5px;
-      padding: 10px 20px;
-      background: var(--secondary-color);
+    .theme-toggle {
+      background: var(--secondary);
       color: white;
       border: none;
+      padding: 8px 12px;
       border-radius: 6px;
       cursor: pointer;
-      font-size: 1em;
-      transition: background 0.3s, transform 0.2s;
+      font-weight:600;
     }
-    
-    .quiz-section button:hover, .quiz-section button:focus {
-      background: var(--accent-color);
-      transform: scale(1.05);
-      outline: none;
+    .theme-toggle:hover {
+      background: var(--accent);
     }
-    
-    .feedback {
-      margin-top: 10px;
-      font-weight: bold;
+    nav.tabs {
+      display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-top:15px; width:100%;
     }
-    
-    /* Overall Scoreboard */
-    .scoreboard {
-      text-align: center;
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-      margin: 30px auto;
-      max-width: 500px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    .tab {
+      background: var(--card);
+      border:2px solid var(--secondary);
+      border-radius:30px;
+      padding:8px 16px;
+      cursor:pointer;
+      font-weight:600;
+      transition: background .3s, color .3s;
     }
-    
-    .scoreboard h3 {
-      color: var(--secondary-color);
-      margin-top: 0;
+    .tab.active, .tab:hover {
+      background: var(--secondary);
+      color: #fff;
     }
-    
-    /* Reset Button for Quiz */
-    .reset-btn {
-      background: var(--accent-color);
-      margin-top: 15px;
+    #progressBar {
+      width:100%; height:4px; background:#ccc; margin-top:10px;
     }
-    
-    /* Floating animation for illustrations */
-    .float {
-      animation: float 3s ease-in-out infinite;
+    #progress {
+      height:4px; background: var(--secondary); width:0; transition: width .3s;
     }
-    
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
+    main { max-width:1000px; margin:20px auto; padding:0 10px; }
+    section { display:none; animation:fadeIn .7s ease-out forwards; margin-bottom:60px; }
+    section.active { display:block; }
+    section h2 { color: var(--secondary); margin-bottom:10px; }
+    .card {
+      background: var(--card);
+      padding:20px;
+      border-radius:10px;
+      margin:15px 0;
+      box-shadow:0 4px 8px rgba(0,0,0,0.05);
     }
-    
-    @media (max-width: 600px) {
-      .tab {
-        padding: 8px 15px;
-        font-size: 0.9em;
-      }
-      
-      .quiz-section input[type="text"] {
-        width: 100%;
-      }
+    .info-icon {
+      margin-left:4px; color: var(--accent); cursor:pointer; position:relative;
+    }
+    .info-icon::after {
+      content: attr(data-tooltip);
+      position:absolute;
+      bottom:125%; left:50%;
+      transform:translateX(-50%);
+      background: var(--secondary);
+      color:#fff;
+      padding:6px 8px;
+      border-radius:6px;
+      white-space:nowrap;
+      opacity:0; pointer-events:none;
+      transition:opacity .3s;
+      font-size:0.9em;
+    }
+    .info-icon:hover::after { opacity:1; }
+    form.calc { display:grid; grid-template-columns:1fr auto; gap:10px; align-items:end; margin-top:10px; }
+    form.calc input, form.calc select, form.calc button {
+      padding:8px; font-size:1em; border:1px solid #ccc; border-radius:6px;
+    }
+    form.calc button {
+      background: var(--secondary); color:#fff; border:none; cursor:pointer;
+      transition:background .3s;
+    }
+    form.calc button:hover { background: var(--accent); }
+    .output { margin-top:10px; font-weight:600; }
+    .chart-container { max-width:800px; margin:30px auto; }
+    canvas { width:100% !important; height:auto !important; }
+    /* Quiz */
+    .quiz-container { background: var(--card); padding:20px; border-radius:12px; }
+    .quiz-question { margin-bottom:20px; }
+    .quiz-question h3 { color: var(--accent); margin-bottom:8px; }
+    .quiz-question ul { list-style:none; padding-left:0; }
+    .quiz-question li { margin:6px 0; }
+    .quiz-question input { margin-right:8px; }
+    .quiz-submit { display:block; margin:20px auto; padding:10px 20px; background:var(--secondary); color:#fff; border:none; border-radius:6px; cursor:pointer; font-size:1em; }
+    .quiz-submit:disabled { background:#aaa; cursor:not-allowed; }
+    .feedback { text-align:center; margin-top:15px; font-weight:600; }
+    @keyframes fadeIn {
+      from { opacity:0; transform: translateY(20px); }
+      to { opacity:1; transform: translateY(0); }
+    }
+    footer {
+      background: var(--card);
+      padding:20px;
+      text-align:center;
+      color: var(--text);
+      border-top:1px solid #ccc;
+      margin-top:40px;
+    }
+    footer a { color: var(--secondary); text-decoration:none; margin:0 8px; }
+    @media(max-width:600px){
+      nav.tabs { gap:6px; }
+      .tab { padding:6px 12px; font-size:0.9em; }
+      header { flex-direction:column; gap:10px; }
     }
   </style>
-  <!-- Chart.js Library -->
+  <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
   <header>
-    <h1>Finance Story: The Journey to Financial Mastery</h1>
+    <h1>INVST UP</h1>
+    <button class="theme-toggle" id="themeBtn">Dark Mode</button>
     <nav class="tabs" aria-label="Main Navigation">
-      <button class="tab active" data-target="introContent" aria-controls="introContent">Introduction</button>
-      <button class="tab" data-target="foundationsContent" aria-controls="foundationsContent">Foundations</button>
-      <button class="tab" data-target="budgetingContent" aria-controls="budgetingContent">Budgeting</button>
-      <button class="tab" data-target="investingContent" aria-controls="investingContent">Investing</button>
-      <button class="tab" data-target="industryContent" aria-controls="industryContent">Industry Outlook</button>
-      <button class="tab" data-target="quizContent" aria-controls="quizContent">Final Quiz</button>
+      <button class="tab active" data-target="intro">Introduction</button>
+      <button class="tab" data-target="foundations">Foundations</button>
+      <button class="tab" data-target="budgeting">Budgeting</button>
+      <button class="tab" data-target="investing">Investing</button>
+      <button class="tab" data-target="industry">Industry Outlook</button>
+      <button class="tab" data-target="retirement">Retirement & Tax</button>
+      <button class="tab" data-target="quiz">Final Quiz</button>
     </nav>
+    <div id="progressBar"><div id="progress"></div></div>
   </header>
+
   <main>
-    <!-- Introduction Tab Content -->
-    <section id="introContent" class="tab-content active" role="tabpanel" aria-labelledby="Introduction">
-      <h2>Welcome to Your Financial Adventure!</h2>
-      <p>
-        Our journey begins with you stepping into the fascinating realm of finance. Here, you will unlock the mysteries of money,
-        learn how to manage budgets, invest wisely, and understand the dynamic world of the financial industry.
-      </p>
-      <div class="financial-path">
-        <svg viewBox="0 0 800 200" preserveAspectRatio="xMidYMid meet">
-          <polyline id="introPath" class="float" points="0,150 150,120 300,140 450,80 600,100 800,70" fill="none" stroke="var(--accent-color)" stroke-width="5" stroke-dasharray="1000" stroke-dashoffset="1000" />
-        </svg>
+    <!-- 1. Introduction -->
+    <section id="intro" class="active" role="tabpanel">
+      <h2>Welcome to INVST UP!</h2>
+      <p>Vous êtes sur le point de transformer votre relation à l’argent. À travers des explications, des calculateurs et des quizzes,
+      vous apprendrez à maîtriser :</p>
+      <ul class="card">
+        <li>Les **intérêts** simples et composés</li>
+        <li>La **gestion de budget** & la règle 50/30/20</li>
+        <li>Les **classes d’actifs** et la diversification</li>
+        <li>Les **tendances** du secteur financier</li>
+        <li>La **planification retraite** & optimisation fiscale</li>
+      </ul>
+      <p>Chaque chapitre contient des outils interactifs pour pratiquer immédiatement.</p>
+    </section>
+
+    <!-- 2. Foundations -->
+    <section id="foundations" role="tabpanel">
+      <h2>Chapitre 1 : Fondamentaux</h2>
+      <div class="card">
+        <h3>Intérêt Simple <i class="fas fa-info-circle info-icon" data-tooltip="I = P × r × t"></i></h3>
+        <p>Calculez les intérêts que vous gagnez sur un prêt ou un dépôt sans capitalisation.</p>
+        <form id="siForm" class="calc">
+          <input type="number" id="siP" placeholder="Capital P (€)" value="1000" />
+          <input type="number" id="siR" placeholder="Taux annuel r (%)" value="5" />
+          <input type="number" id="siT" placeholder="Durée t (années)" value="3" />
+          <button type="button">Calculer</button>
+        </form>
+        <div class="output" id="siOutput"></div>
       </div>
-      <p>Watch the animated path as it reveals the road to financial wisdom!</p>
-    </section>
-    
-    <!-- Foundations Tab Content -->
-    <section id="foundationsContent" class="tab-content" role="tabpanel" aria-labelledby="Foundations">
-      <h2>Chapter 1: Finance Foundations</h2>
-      <p>
-        A strong foundation is essential for any journey. Just as a building stands tall on a solid base, your financial success starts
-        with understanding the basics such as interest, inflation, and the time value of money.
-      </p>
-      <article class="content-box">
-        <h3>Simple Interest Explained</h3>
-        <p><strong>Formula:</strong> I = P × r × t</p>
+      <div class="card">
+        <h3>Intérêt Composé <i class="fas fa-info-circle info-icon" data-tooltip="A = P × (1 + r/n)^{n t}"></i></h3>
+        <p>Voyez comment vos intérêts génèrent à leur tour des intérêts.</p>
+        <form id="ciForm" class="calc">
+          <input type="number" id="ciP" placeholder="Capital P (€)" value="1000" />
+          <input type="number" id="ciR" placeholder="Taux annuel r (%)" value="5" />
+          <input type="number" id="ciN" placeholder="N° de comp. / an" value="4" />
+          <input type="number" id="ciT" placeholder="Durée t (années)" value="5" />
+          <button type="button">Calculer</button>
+        </form>
+        <div class="output" id="ciOutput"></div>
+      </div>
+      <div class="card">
+        <h3>Inflation <i class="fas fa-info-circle info-icon" data-tooltip="Perte de pouvoir d’achat"></i></h3>
         <p>
-          Here, I is the interest earned, P is the principal amount, r is the annual interest rate (expressed as a decimal), and t is the time (in years).
-          For example, investing $1,000 at a 5% annual rate for 3 years earns you $150 in interest.
+          Si l’inflation annuelle est de 3%, votre euro ne vaudra que <strong>0,97 €</strong> l’an prochain.
+          Comprendre l’inflation est crucial pour protéger votre épargne.
         </p>
-      </article>
-      <article class="content-box">
-        <h3>Why It Matters</h3>
+      </div>
+    </section>
+
+    <!-- 3. Budgeting -->
+    <section id="budgeting" role="tabpanel">
+      <h2>Chapitre 2 : Budget & Gestion</h2>
+      <div class="card">
+        <h3>Règle 50/30/20</h3>
+        <p>Distrubuez vos revenus nets ainsi :</p>
         <ul>
-          <li>Understanding interest helps you gauge the cost of loans.</li>
-          <li>The time value of money teaches you to invest early.</li>
-          <li>Inflation awareness protects and grows your purchasing power.</li>
+          <li><strong>50%</strong> Besoins (logement, factures…)</li>
+          <li><strong>30%</strong> Loisirs & envies</li>
+          <li><strong>20%</strong> Épargne & dettes</li>
         </ul>
-      </article>
-    </section>
-    
-    <!-- Budgeting Tab Content -->
-    <section id="budgetingContent" class="tab-content" role="tabpanel" aria-labelledby="Budgeting">
-      <h2>Chapter 2: Budgeting & Money Management</h2>
-      <p>
-        Budgeting is like designing a roadmap where every dollar has a destination. Smart budgeting helps you save, reduce unnecessary expenses,
-        and prepares you for big financial opportunities.
-      </p>
-      <article class="content-box">
-        <h3>Compound Interest: The Magic Multiplier</h3>
-        <p>
-          Unlike simple interest, compound interest lets your earnings generate more earnings. The formula is:
-        </p>
-        <p><em>A = P × (1 + r)<sup>t</sup></em></p>
-        <p>
-          For example, investing $500 at a 4% annual rate over 5 years—thanks to compounding—yields roughly $608.33.
-        </p>
-      </article>
-      <!-- Interactive Savings Chart -->
+      </div>
+      <div class="card">
+        <h3>Votre Propre Budget</h3>
+        <p>Modifiez les curseurs pour voir en direct la répartition :</p>
+        <form id="budgetForm" class="calc" style="grid-template-columns:1fr 1fr auto;">
+          <label>Besoin: <input type="range" id="bNeeds" min="0" max="100" value="50" /> <span id="vNeeds">50%</span></label>
+          <label>Envies: <input type="range" id="bWants" min="0" max="100" value="30" /> <span id="vWants">30%</span></label>
+          <label>Épargne: <input type="range" id="bSave"  min="0" max="100" value="20" /> <span id="vSave">20%</span></label>
+        </form>
+      </div>
       <div class="chart-container">
-        <canvas id="savingsChart" aria-label="Compound Interest Chart" role="img"></canvas>
+        <canvas id="budgetChart" role="img" aria-label="Budget Breakdown"></canvas>
       </div>
-      <p style="text-align:center; font-size:0.9em;">Interactive chart: Visualize your savings growth over time!</p>
     </section>
-    
-    <!-- Investing Tab Content -->
-    <section id="investingContent" class="tab-content" role="tabpanel" aria-labelledby="Investing">
-      <h2>Chapter 3: Investing Insights</h2>
-      <p>
-        Investing is an art that balances risk with reward. Whether it's stocks, bonds, or mutual funds, understanding the risks ensures you plant the seeds
-        for long-term prosperity.
-      </p>
-      <article class="content-box">
-        <h3>Expected Return</h3>
-        <p>
-          To measure potential performance, the expected return formula is used:
-        </p>
-        <p><em>E(R) = Σ (pᵢ × Rᵢ)</em></p>
-        <p>
-          In this calculation, each possible outcome is weighted by its probability, providing you with a statistical average return.
-        </p>
-      </article>
-      <article class="content-box">
-        <h3>Diversification & Risk</h3>
-        <p>
-          Diversification is key to managing risk. By spreading your investments, you reduce the negative impact of a single asset's poor performance.
-        </p>
+
+    <!-- 4. Investing -->
+    <section id="investing" role="tabpanel">
+      <h2>Chapitre 3 : Investissement</h2>
+      <div class="card">
+        <h3>Classes d’actifs & diversification <i class="fas fa-info-circle info-icon" data-tooltip="Réduire le risque global"></i></h3>
         <ul>
-          <li>Stocks offer potential high rewards but come with greater risk.</li>
-          <li>Bonds provide stability and lower risk.</li>
-          <li>Mutual funds balance a variety of asset types.</li>
+          <li><strong>Actions</strong> – Rendement potentiellement fort, volatilité élevée</li>
+          <li><strong>Obligations</strong> – Rendement modéré, plus de stabilité</li>
+          <li><strong>Immobilier</strong> – Revenus réguliers, corrélation faible avec les marchés</li>
+          <li><strong>Alternatives</strong> – Or, matières premières, cryptos…</li>
         </ul>
-      </article>
+      </div>
+      <div class="card">
+        <h3>Ratio Risque/Rendement</h3>
+        <p>
+          Un investissement plus risqué peut offrir un rendement plus élevé. 
+          Utilisez la théorie moderne de portefeuille pour optimiser votre allocation.
+        </p>
+      </div>
+      <div class="card">
+        <h3>Formule de l’Espérance de Rendement</h3>
+        <p>E(R) = Σ p<sub>i</sub> × R<sub>i</sub></p>
+        <p>Chaque scénario pèse selon sa probabilité.</p>
+      </div>
     </section>
-    
-    <!-- Industry Outlook Tab Content -->
-    <section id="industryContent" class="tab-content" role="tabpanel" aria-labelledby="Industry">
-      <h2>Chapter 4: Finance Industry Outlook</h2>
-      <p>
-        The finance industry is a dynamic ecosystem that affects every aspect of the economy—from local banks to global markets. Learn about the major players and trends shaping our financial world.
-      </p>
-      <article class="content-box">
-        <h3>Key Players</h3>
+
+    <!-- 5. Industry Outlook -->
+    <section id="industry" role="tabpanel">
+      <h2>Chapitre 4 : Tendances & Acteurs</h2>
+      <div class="card">
+        <h3>Écosystème Financier</h3>
         <ul>
-          <li><strong>Banks:</strong> Provide loans and safeguard deposits.</li>
-          <li><strong>Investment Firms:</strong> Manage assets and craft investment products.</li>
-          <li><strong>Insurance Companies:</strong> Offer protection in uncertain times.</li>
-          <li><strong>Regulators:</strong> Maintain market integrity and protect consumers.</li>
+          <li>Banquiers, courtiers, bourses</li>
+          <li>Fintechs & néobanques</li>
+          <li>Assureurs et gestionnaires d’actifs</li>
+          <li>Régulateurs (AMF, FED, BCE…)</li>
         </ul>
-      </article>
-      <article class="content-box">
-        <h3>Emerging Trends</h3>
+      </div>
+      <div class="card">
+        <h3>Innovation & ESG</h3>
         <p>
-          Technological innovation, globalization, and creative financial products are continuously transforming the industry. Staying informed helps you leverage these changes.
+          Intelligence artificielle, blockchain, investissements responsables (ESG) : 
+          découvrez comment ces tendances redessinent le futur de la finance.
         </p>
-      </article>
+      </div>
     </section>
-    
-    <!-- Final Quiz Tab Content -->
-    <section id="quizContent" class="tab-content" role="tabpanel" aria-labelledby="Quiz">
-      <h2>Final Quiz: Test Your Financial Mastery</h2>
-      <p>
-        Now that you’ve journeyed through the world of finance, it’s time to assess your understanding. Answer the quiz questions below—
-        your cumulative score will be tracked live!
-      </p>
-      
-      <!-- Quiz Question 1 -->
-      <div class="quiz-section">
-        <h3>Quiz Question 1</h3>
-        <p>What does APR stand for?</p>
-        <input type="text" id="q1" placeholder="Your answer here" />
-        <div>
-          <button onclick="checkAnswer('q1','annual percentage rate','q1Feedback')">Submit Answer</button>
-        </div>
-        <div class="feedback" id="q1Feedback"></div>
+
+    <!-- 6. Retirement & Tax Planning -->
+    <section id="retirement" role="tabpanel">
+      <h2>Chapitre 5 : Retraite & Fiscalité</h2>
+      <div class="card">
+        <h3>Épargne Retraite</h3>
+        <p>Choisissez un véhicule (PER, Assurance‑vie, 401(k), PEA…) adapté à votre situation.</p>
       </div>
-      
-      <!-- Quiz Question 2 -->
-      <div class="quiz-section">
-        <h3>Quiz Question 2</h3>
-        <p>
-          Which phenomenon refers to earning interest on interest?
-        </p>
-        <input type="text" id="q2" placeholder="Your answer here" />
-        <div>
-          <button onclick="checkAnswer('q2','compound','q2Feedback')">Submit Answer</button>
-        </div>
-        <div class="feedback" id="q2Feedback"></div>
+      <div class="card">
+        <h3>Projection de Retraite</h3>
+        <form id="retForm" class="calc">
+          <input type="number" id="rtC" placeholder="Contrib/mois (€)" value="200" />
+          <input type="number" id="rtR" placeholder="Taux annuel (%)" value="5" />
+          <input type="number" id="rtT" placeholder="Durée (années)" value="30" />
+          <button type="button">Projeter</button>
+        </form>
+        <div class="output" id="rtOutput"></div>
       </div>
-      
-      <!-- Quiz Question 3 -->
-      <div class="quiz-section">
-        <h3>Quiz Question 3</h3>
-        <p>
-          Which asset is typically considered riskier: stocks or bonds?
-        </p>
-        <input type="text" id="q3" placeholder="Your answer here" />
-        <div>
-          <button onclick="checkAnswer('q3','stocks','q3Feedback')">Submit Answer</button>
-        </div>
-        <div class="feedback" id="q3Feedback"></div>
+      <div class="chart-container">
+        <canvas id="retChart" role="img" aria-label="Retirement Projection"></canvas>
       </div>
-      
-      <!-- Overall Score Display -->
-      <div class="scoreboard">
-        <h3>Your Total Score</h3>
-        <p id="totalScore">0 / 3</p>
-        <button class="reset-btn" onclick="resetQuiz()">Reset Quiz</button>
-      </div>
+    </section>
+
+    <!-- 7. Final Quiz -->
+    <section id="quiz" role="tabpanel">
+      <h2>Quiz Final : Testez vos connaissances</h2>
+      <div class="quiz-container" id="quizContainer"></div>
+      <button class="quiz-submit" id="submitQuiz" disabled>Soumettre</button>
+      <div class="feedback" id="quizFeedback"></div>
     </section>
   </main>
-  
+
+  <footer>
+    <p>&copy; 2025 INVST UP • <a href="#">À propos</a> • <a href="#">Contact</a> • <a href="#">Mentions légales</a></p>
+  </footer>
+
   <script>
-    // Handle Tab Navigation with smooth scrolling
-    const tabs = document.querySelectorAll('.tab');
-    const tabContents = document.querySelectorAll('.tab-content');
-    
-    tabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        const targetId = tab.getAttribute('data-target');
-        
-        // Remove active class from all tabs and hide all tab content
-        tabs.forEach(t => t.classList.remove('active'));
-        tabContents.forEach(content => content.classList.remove('active'));
-        
-        // Activate selected tab and smoothly scroll
+  (function(){
+    // Thème clair/sombre
+    const themeBtn = document.getElementById('themeBtn');
+    themeBtn.addEventListener('click', ()=>{
+      document.body.classList.toggle('dark');
+      themeBtn.textContent = document.body.classList.contains('dark') ? 'Light Mode' : 'Dark Mode';
+    });
+
+    // Onglets & barre de progression
+    const tabs = [...document.querySelectorAll('.tab')];
+    const secs = [...document.querySelectorAll('main section')];
+    const prog = document.getElementById('progress');
+    tabs.forEach((tab,i)=>{
+      tab.addEventListener('click', ()=>{
+        tabs.forEach(t=>t.classList.remove('active'));
+        secs.forEach(s=>s.classList.remove('active'));
         tab.classList.add('active');
-        const targetSection = document.getElementById(targetId);
-        targetSection.classList.add('active');
-        targetSection.scrollIntoView({ behavior: 'smooth' });
-        
-        // Initialize interactive chart if Budgeting tab
-        if (targetId === 'budgetingContent') {
-          updateSavingsChart();
-        }
+        const sec = document.getElementById(tab.dataset.target);
+        sec.classList.add('active');
+        prog.style.width = ((i+1)/tabs.length*100) + '%';
       });
     });
-    
-    // Animate the SVG path in Introduction
-    function animatePath() {
-      const path = document.getElementById("introPath");
-      const length = path.getTotalLength();
-      path.style.strokeDasharray = length;
-      path.style.strokeDashoffset = length;
-      let startTime = null;
-      const duration = 2500;
-      
-      function draw(now) {
-        if (!startTime) startTime = now;
-        const elapsed = now - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-        path.style.strokeDashoffset = length * (1 - progress);
-        if (progress < 1) {
-          requestAnimationFrame(draw);
-        }
-      }
-      requestAnimationFrame(draw);
-    }
-    
-    document.addEventListener("DOMContentLoaded", () => {
-      animatePath();
-      // Default: ensure the active tab content is in view
-      document.querySelector('.tab.active').click();
+
+    // Calcul Intérêt Simple
+    document.querySelector('#siForm button').addEventListener('click', ()=>{
+      const P=+document.getElementById('siP').value;
+      const r=+document.getElementById('siR').value/100;
+      const t=+document.getElementById('siT').value;
+      const I = P*r*t;
+      document.getElementById('siOutput').textContent = `Intérêt = €${I.toFixed(2)}`;
     });
-    
-    // Interactive Savings Chart for Budgeting
-    let savingsChart;
-    function updateSavingsChart() {
-      const ctx = document.getElementById('savingsChart').getContext('2d');
-      const principal = 500;
-      const rate = 0.04;
-      const years = 5;
-      const labels = [];
-      const data = [];
-      
-      for (let year = 0; year <= years; year++) {
-        labels.push(year);
-        data.push(principal * Math.pow(1 + rate, year));
+    // Calcul Intérêt Composé
+    document.querySelector('#ciForm button').addEventListener('click', ()=>{
+      const P=+document.getElementById('ciP').value;
+      const r=+document.getElementById('ciR').value/100;
+      const n=+document.getElementById('ciN').value;
+      const t=+document.getElementById('ciT').value;
+      const A = P * Math.pow(1 + r/n, n*t);
+      document.getElementById('ciOutput').textContent = `Montant = €${A.toFixed(2)}`;
+    });
+
+    // Budget interactif
+    const bNeeds = document.getElementById('bNeeds'),
+          bWants= document.getElementById('bWants'),
+          bSave = document.getElementById('bSave'),
+          vNeeds = document.getElementById('vNeeds'),
+          vWants= document.getElementById('vWants'),
+          vSave = document.getElementById('vSave');
+    function updateBudget(){
+      let a=+bNeeds.value, b=+bWants.value, c=+bSave.value;
+      const sum = a+b+c;
+      if(sum!==100){
+        c = 100 - a - b;
+        bSave.value=c; vSave.textContent=`${c}%`;
       }
-      
-      if (savingsChart instanceof Chart) {
-        savingsChart.destroy();
-      }
-      
-      savingsChart = new Chart(ctx, {
-        type: 'line',
+      vNeeds.textContent=`${a}%`;
+      vWants.textContent=`${b}%`;
+      vSave.textContent=`${c}%`;
+      budgetChart.data.datasets[0].data=[a,b,c];
+      budgetChart.update();
+    }
+    [bNeeds,bWants,bSave].forEach(el=>el.addEventListener('input',updateBudget));
+
+    // Chart Budget
+    const budgetChart = new Chart(
+      document.getElementById('budgetChart'),
+      {
+        type: 'doughnut',
         data: {
-          labels: labels,
-          datasets: [{
-            label: 'Compound Savings Growth',
-            data: data,
-            borderColor: '#3498db',
-            backgroundColor: 'rgba(52,152,219,0.3)',
-            fill: true,
-            tension: 0.3,
-            pointRadius: 5,
-            pointHoverRadius: 7
+          labels: ['Besoins','Envies','Épargne'],
+          datasets:[{
+            data: [50,30,20],
+            backgroundColor: ['#3498db','#e74c3c','#2ecc71']
           }]
         },
-        options: {
-          responsive: true,
-          scales: {
-            y: { 
-              beginAtZero: true,
-              title: { display: true, text: 'Amount ($)' }
-            },
-            x: {
-              title: { display: true, text: 'Years' }
-            }
-          },
-          plugins: {
-            tooltip: {
-              callbacks: {
-                label: (context) => 'Year ' + context.label + ': $' + context.parsed.y.toFixed(2)
-              }
-            }
-          }
-        }
-      });
-    }
-    
-    // Quiz and Score Logic
-    let totalScore = 0;
-    const totalQuestions = 3;
-    
-    function updateScore() {
-      document.getElementById("totalScore").innerText = totalScore + " / " + totalQuestions;
-    }
-    
-    // Basic string-matching for answers (case insensitive)
-    function checkAnswer(inputId, correctAnswer, feedbackId) {
-      const userAnswer = document.getElementById(inputId).value.trim().toLowerCase();
-      const feedbackElem = document.getElementById(feedbackId);
-      
-      if (userAnswer.includes(correctAnswer.toLowerCase())) {
-        if (feedbackElem.getAttribute("data-scored") !== "true") {
-          feedbackElem.textContent = "Correct!";
-          feedbackElem.style.color = "green";
-          totalScore++;
-          feedbackElem.setAttribute("data-scored", "true");
-        } else {
-          feedbackElem.textContent = "Already answered correctly!";
-        }
-      } else {
-        feedbackElem.textContent = "Incorrect. Try again.";
-        feedbackElem.style.color = "red";
+        options:{ responsive:true }
       }
-      updateScore();
-    }
-    
-    function resetQuiz() {
-      totalScore = 0;
-      updateScore();
-      // Reset answers and feedbacks
-      ['q1', 'q2', 'q3'].forEach(id => {
-        document.getElementById(id).value = "";
+    );
+
+    // Projection Retraite
+    const rtCtx = document.getElementById('retChart').getContext('2d');
+    let retChart = new Chart(rtCtx, {
+      type:'line',
+      data:{ labels:[], datasets:[{ label:'Capital (€)', data:[], borderColor:'#3498db', backgroundColor:'rgba(52,152,219,0.3)', tension:0.3 }] },
+      options:{ responsive:true, scales:{ y:{ beginAtZero:true } } }
+    });
+    document.querySelector('#retForm button').addEventListener('click', ()=>{
+      const C=+document.getElementById('rtC').value;
+      const r=+document.getElementById('rtR').value/100;
+      const t=+document.getElementById('rtT').value;
+      const labels=[], data=[];
+      let capital=0;
+      for(let year=1; year<=t; year++){
+        capital = (capital + C*12) * (1 + r);
+        labels.push(`Année ${year}`);
+        data.push(capital.toFixed(2));
+      }
+      retChart.data.labels = labels;
+      retChart.data.datasets[0].data = data;
+      retChart.update();
+      document.getElementById('rtOutput').textContent = `Capital estimé après ${t} ans : €${capital.toFixed(2)}`;
+    });
+
+    // Quiz dynamique
+    const quizData = [
+      {
+        q:"Que signifie APR ?",
+        c:["Annual Percentage Rate","Annual Profit Ratio","Applied Price Rate","Average Profit Rate"],
+        a:0
+      },{
+        q:"Phénomène “intérêt sur intérêt” ?",
+        c:["Intérêt simple","Intérêt composé","Intérêt différé","Intérêt fixe"],
+        a:1
+      },{
+        q:"Lequel est plus risqué : actions ou obligations ?",
+        c:["Actions","Obligations","Égal","Ni l’un ni l’autre"],
+        a:0
+      },{
+        q:"But de la règle 50/30/20 ?",
+        c:["Stratégie d’investissement","Gestion de budget","Plan de retraite","Code fiscal"],
+        a:1
+      },{
+        q:"Véhicule retraite fiscal en France ?",
+        c:["PEA","PER","Assurance-vie","CEL"],
+        a:1
+      }
+    ];
+    const qc = document.getElementById('quizContainer');
+    quizData.forEach((item,i)=>{
+      const div = document.createElement('div');
+      div.className='quiz-question card';
+      div.innerHTML = `<h3>Q${i+1}. ${item.q}</h3><ul>`+
+        item.c.map((ch,j)=>
+          `<li><label><input type="radio" name="q${i}" value="${j}"/> ${ch}</label></li>`
+        ).join('') + `</ul>`;
+      qc.appendChild(div);
+    });
+    qc.addEventListener('change', ()=>{
+      const answered = quizData.every((_,i)=> document.querySelector(`input[name=q${i}]:checked`));
+      document.getElementById('submitQuiz').disabled = !answered;
+    });
+    document.getElementById('submitQuiz').addEventListener('click', ()=>{
+      let score=0;
+      quizData.forEach((item,i)=>{
+        const sel = +document.querySelector(`input[name=q${i}]:checked`).value;
+        if(sel===item.a) score++;
       });
-      ['q1Feedback', 'q2Feedback', 'q3Feedback'].forEach(id => {
-        const elem = document.getElementById(id);
-        elem.textContent = "";
-        elem.removeAttribute("data-scored");
-      });
-    }
+      document.getElementById('quizFeedback').textContent = 
+        `Vous avez obtenu ${score} / ${quizData.length} réponses correctes.`;
+      document.getElementById('submitQuiz').disabled = true;
+    });
+
+  })();
   </script>
 </body>
 </html>

@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InvestSimu - Simulateur d'Investissement</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f4f8;
+        }
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+        .chart-container {
+            height: 200px;
+            position: relative;
+        }
+        @media print {
+            body {
+                width: 100%;
+                margin: 0;
+                padding: 0;
+                background-color: white;
+            }
+            .no-print {
+                display: none;
+            }
+            .page-break {
+                page-break-before: always;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <header class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white p-6 shadow-lg">
+        <div class="container mx-auto">
+            <h1 class="text-3xl font-bold">InvestSimu</h1>
+            <p class="mt-2 opacity-80">Simulateur d'investissement - Version Test</p>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4 mt-6">
+        <!-- Dashboard Section -->
+        <section class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Tableau de Bord</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-blue-50 p-4 rounded-lg border border-blue-200">
+                    <h3 class="text-lg font-semibold text-blue-800">Solde Disponible</h3>
+                    <p class="text-3xl font-bold text-blue-900 mt-2">€<span id="available-balance">10000.00</span></p>
+                </div>
+                <div class="bg-green-50 p-4 rounded-lg border border-green-200">
+                    <h3 class="text-lg font-semibold text-green-800">Valeur du Portefeuille</h3>
+                    <p class="text-3xl font-bold text-green-900 mt-2">€<span id="portfolio-value">0.00</span></p>
+                </div>
+                <div class="bg-purple-50 p-4 rounded-lg border border-purple-200">
+                    <h3 class="text-lg font-semibold text-purple-800">Performance Globale</h3>
+                    <p class="text-3xl font-bold text-purple-900 mt-2"><span id="overall-performance">0.00</span>%</p>
+                </div>
+            </div>
+            
+            <div class="mt-6">
+                <h3 class="text-xl font-semibold text-gray-700 mb-3">Évolution de la Performance</h3>
+                <div class="chart-container bg-gray-50 rounded-lg border border-gray-200 p-4">
+                    <canvas id="performance-chart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Projets d'Investissement Disponibles</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="projects-container">
+                <!-- Projects will be dynamically inserted here -->
+            </div>
+        </section>
+
+        <!-- Portfolio Section -->
+        <section class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Votre Portefeuille</h2>
+            <div class="overflow-x-auto">
+                <table class="min-w-full bg-white">
+                    <thead>
+                        <tr class="bg-gray-100 text-gray-600 uppercase text-sm leading-normal">
+                            <th class="py-3 px-6 text-left">Projet</th>
+                            <th class="py-3 px-6 text-left">Catégorie</th>
+                            <th class="py-3 px-6 text-right">Montant Investi</th>
+                            <th class="py-3 px-6 text-right">Valeur Actuelle</th>
+                            <th class="py-3 px-6 text-right">Performance</th>
+                            <th class="py-3 px-6 text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="portfolio-table" class="text-gray-600 text-sm">
+                        <tr class="border-b border-gray-200 text-center">
+                            <td colspan="6" class="py-3 px-6">Aucun investissement pour le moment</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Simulation Controls -->
+        <section class="bg-gray-50 rounded-lg border border-gray-200 p-6 mb-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Contrôles de Simulation</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <button id="simulate-month" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 w-full">
+                        Simuler un Mois
+                    </button>
+                </div>
+                <div>
+                    <button id="simulate-year" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 w-full">
+                        Simuler une Année
+                    </button>
+                </div>
+            </div>
+            <div class="mt-4">
+                <button id="reset-simulation" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300">
+                    Réinitialiser la Simulation
+                </button>
+            </div>
+        </section>
+
+        <!-- Log Section -->
+        <section class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Journal d'Activités</h2>
+            <div class="bg-gray-50 rounded-lg border border-gray-200 p-4 h-40 overflow-y-auto">
+                <ul id="activity-log" class="text-sm text-gray-700">
+                    <li class="pb-2 mb-2 border-b border-gray-200">Bienvenue sur InvestSimu! Commencez à investir dans des projets fictifs.</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <!-- Investment Modal -->
+    <div id="investment-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+        <div class="bg-white rounded-lg p-6 max-w-md w-full">
+            <h3 id="modal-title" class="text-xl font-bold text-gray-800 mb-4">Investir dans <span id="project-name"></span></h3>
+            <p id="project-description" class="text-gray-600 mb-4"></p>
+            
+            <div class="mb-4">
+                <label for="investment-amount" class="block text-gray-700 font-medium mb-2">Montant à investir (€)</label>
+                <input type="number" id="investment-amount" class="w-full p-2 border border-gray-300 rounded-lg" min="1" max="10000">
+                <p class="text-sm text-gray-500 mt-1">Maximum disponible: €<span id="max-amount">10000</span></p>
+            </div>
+            
+            <div class="flex flex-wrap gap-2 justify-end">
+                <button id="cancel-investment" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-2 px-4 rounded-lg transition duration-300">
+                    Annuler
+                </button>
+                <button id="confirm-investment" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition duration-300">
+                    Confirmer l'investissement
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white p-6 mt-8">
+        <div class="container mx-auto text-center">
+            <p>InvestSimu - Simulateur d'investissement à des fins éducatives uniquement</p>
+            <p class="mt-2 text-gray-400 text-sm">Cette application est une simulation et ne constitue pas un conseil financier.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Global data
+        const state = {
+            balance: 10000,
+            portfolio: [],
+            currentMonth: 0,
+            performanceHistory: [0],
+            projects: [
+                {
+                    id: 1,
+                    name: "Tech Innovators Inc.",
+                    description: "Startup dans le domaine de l'intelligence artificielle avec fort potentiel de croissance.",
+                    category: "Technologie",
+                    minInvestment: 1000,
+                    risk: "Élevé",
+                    expectedReturn: 15,
+                    volatility: 25,
+                    color: 'blue'
+                },
+                {
+                    id: 2,
+                    name: "Sécurité Obligataire",
+                    description: "Obligations d'État à faible rendement mais très sécurisées.",
+                    category: "Obligations",
+                    minInvestment: 500,
+                    risk: "Faible",
+                    expectedReturn: 3,
+                    volatility: 2,
+                    color: 'green'
+                },
+                {
+                    id: 3,
+                    name: "Immobilier Commercial",
+                    description: "Projet immobilier commercial dans un quartier en développement.",
+                    category: "Immobilier",
+                    minInvestment: 2000,
+                    risk: "Moyen",
+                    expectedReturn: 8,
+                    volatility: 6,
+                    color: 'orange'
+                },
+                {
+                    id: 4,
+                    name: "Fonds Énergies Renouvelables",
+                    description: "Investissement dans un portefeuille d'entreprises d'énergie propre et de technologies vertes.",
+                    category: "Énergie",
+                    minInvestment: 1500,
+                    risk: "Moyen-Élevé",
+                    expectedReturn: 12,
+                    volatility: 18,
+                    color: 'teal'
+                },
+                {
+                    id: 5,
+                    name: "Indice Boursier Mondial",
+                    description: "Fonds indiciel suivant la performance des principaux marchés mondiaux.",
+                    category: "Actions",
+                    minInvestment: 1000,
+                    risk: "Moyen",
+                    expectedReturn: 7,
+                    volatility: 12,
+                    color: 'purple'
+                },
+                {
+                    id: 6,
+                    name: "Startup Biotech",
+                    description: "Entreprise de biotechnologie développant des traitements innovants.",
+                    category: "Santé",
+                    minInvestment: 3000,
+                    risk: "Très Élevé",
+                    expectedReturn: 25,
+                    volatility: 40,
+                    color: 'red'
+                }
+            ]
+        };
+
+        // DOM Elements
+        const availableBalanceEl = document.getElementById('available-balance');
+        const portfolioValueEl = document.getElementById('portfolio-value');
+        const overallPerformanceEl = document.getElementById('overall-performance');
+        const projectsContainerEl = document.getElementById('projects-container');
+        const portfolioTableEl = document.getElementById('portfolio-table');
+        const activityLogEl = document.getElementById('activity-log');
+        const simulateMonthBtn = document.getElementById('simulate-month');
+        const simulateYearBtn = document.getElementById('simulate-year');
+        const resetSimulationBtn = document.getElementById('reset-simulation');
+        
+        // Modal elements
+        const investmentModal = document.getElementById('investment-modal');
+        const projectNameEl = document.getElementById('project-name');
+        const projectDescriptionEl = document.getElementById('project-description');
+        const investmentAmountEl = document.getElementById('investment-amount');
+        const maxAmountEl = document.getElementById('max-amount');
+        const cancelInvestmentBtn = document.getElementById('cancel-investment');
+        const confirmInvestmentBtn = document.getElementById('confirm-investment');
+
+        // Chart setup
+        const ctx = document.getElementById('performance-chart').getContext('2d');
+        const performanceChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Départ'],
+                datasets: [{
+                    label: 'Performance globale (%)',
+                    data: [0],
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 2,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Performance (%)'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Mois'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Helper Functions
+        function formatCurrency(amount) {
+            return amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+        }
+
+        function calculatePortfolioValue() {
+            return state.portfolio.reduce((total, investment) => total + investment.currentValue, 0);
+        }
+
+        function calculateOverallPerformance() {
+            const initialInvestment = state.portfolio.reduce((total, investment) => total + investment.initialAmount, 0);
+            const currentValue = calculatePortfolioValue();
+            if (initialInvestment === 0) return 0;
+            return ((currentValue - initialInvestment) / initialInvestment * 100);
+        }
+
+        function updateDashboard() {
+            availableBalanceEl.textContent = formatCurrency(state.balance);
+            const portfolioValue = calculatePortfolioValue();
+            portfolioValueEl.textContent = formatCurrency(portfolioValue);
+            
+            const performance = calculateOverallPerformance();
+            overallPerformanceEl.textContent = performance.toFixed(2);
+            overallPerformanceEl.className = performance >= 0 ? 'text-green-600' : 'text-red-600';
+        }
+
+        function renderProjects() {
+            projectsContainerEl.innerHTML = '';
+            
+            state.projects.forEach(project => {
+                const projectCard = document.createElement('div');
+                projectCard.className = 'project-card bg-white rounded-lg shadow-md p-4 border-t-4 transition duration-300';
+                projectCard.style.borderTopColor = getRiskColor(project.risk);
+                
+                projectCard.innerHTML = `
+                    <h3 class="text-lg font-bold text-gray-800">${project.name}</h3>
+                    <p class="text-sm text-gray-600 mb-3">${project.description}</p>
+                    <div class="flex justify-between text-sm mb-2">
+                        <span class="font-medium">Catégorie:</span>
+                        <span>${project.category}</span>
+                    </div>
+                    <div class="flex justify-between text-sm mb-2">
+                        <span class="font-medium">Investissement min:</span>
+                        <span>€${formatCurrency(project.minInvestment)}</span>
+                    </div>
+                    <div class="flex justify-between text-sm mb-2">
+                        <span class="font-medium">Risque:</span>
+                        <span class="px-2 py-1 rounded-full text-xs" style="background-color: ${getRiskColor(project.risk)}; color: white;">${project.risk}</span>
+                    </div>
+                    <div class="flex justify-between text-sm mb-4">
+                        <span class="font-medium">Rendement attendu:</span>
+                        <span class="font-bold ${project.expectedReturn >= 10 ? 'text-green-600' : 'text-blue-600'}">${project.expectedReturn}%</span>
+                    </div>
+                    <button class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded-lg transition duration-300 invest-btn" data-project-id="${project.id}">
+                        Investir
+                    </button>
+                `;
+                
+                projectsContainerEl.appendChild(projectCard);
+            });
+            
+            // Add event listeners to all invest buttons
+            document.querySelectorAll('.invest-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const projectId = parseInt(this.getAttribute('data-project-id'));
+                    openInvestmentModal(projectId);
+                });
+            });
+        }
+
+        function renderPortfolio() {
+            if (state.portfolio.length === 0) {
+                portfolioTableEl.innerHTML = `
+                    <tr class="border-b border-gray-200 text-center">
+                        <td colspan="6" class="py-3 px-6">Aucun investissement pour le moment</td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            portfolioTableEl.innerHTML = '';
+            
+            state.portfolio.forEach(investment => {
+                const performance = ((investment.currentValue - investment.initialAmount) / investment.initialAmount * 100).toFixed(2);
+                const performanceClass = parseFloat(performance) >= 0 ? 'text-green-600' : 'text-red-600';
+                
+                const row = document.createElement('tr');
+                row.className = 'border-b border-gray-200 hover:bg-gray-50';
+                
+                row.innerHTML = `
+                    <td class="py-3 px-6 text-left">
+                        <div class="font-medium">${investment.projectName}</div>
+                    </td>
+                    <td class="py-3 px-6 text-left">${investment.category}</td>
+                    <td class="py-3 px-6 text-right">€${formatCurrency(investment.initialAmount)}</td>
+                    <td class="py-3 px-6 text-right">€${formatCurrency(investment.currentValue)}</td>
+                    <td class="py-3 px-6 text-right ${performanceClass}">${performance}%</td>
+                    <td class="py-3 px-6 text-center">
+                        <button class="bg-red-100 text-red-800 hover:bg-red-200 px-3 py-1 rounded-full text-xs font-medium sell-btn" data-investment-id="${investment.id}">
+                            Vendre
+                        </button>
+                    </td>
+                `;
+                
+                portfolioTableEl.appendChild(row);
+            });
+            
+            // Add event listeners to all sell buttons
+            document.querySelectorAll('.sell-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const investmentId = parseInt(this.getAttribute('data-investment-id'));
+                    sellInvestment(investmentId);
+                });
+            });
+        }
+
+        function openInvestmentModal(projectId) {
+            const project = state.projects.find(p => p.id === projectId);
+            
+            if (!project) return;
+            
+            projectNameEl.textContent = project.name;
+            projectDescriptionEl.textContent = project.description;
+            investmentAmountEl.value = project.minInvestment;
+            investmentAmountEl.min = project.minInvestment;
+            investmentAmountEl.max = state.balance;
+            maxAmountEl.textContent = formatCurrency(state.balance);
+            
+            // Store the current project id for later use when confirming investment
+            confirmInvestmentBtn.setAttribute('data-project-id', projectId);
+            
+            investmentModal.classList.remove('hidden');
+        }
+
+        function closeInvestmentModal() {
+            investmentModal.classList.add('hidden');
+        }
+
+        function makeInvestment(projectId, amount) {
+            const project = state.projects.find(p => p.id === projectId);
+            
+            if (!project || amount > state.balance || amount < project.minInvestment) {
+                addToActivityLog(`Investissement impossible : montant invalide ou fonds insuffisants.`);
+                return false;
+            }
+            
+            // Update balance
+            state.balance -= amount;
+            
+            // Create new investment
+            const investment = {
+                id: Date.now(), // Using timestamp as unique id
+                projectId: project.id,
+                projectName: project.name,
+                category: project.category,
+                initialAmount: amount,
+                currentValue: amount,
+                expectedReturn: project.expectedReturn,
+                volatility: project.volatility,
+                purchaseDate: state.currentMonth
+            };
+            
+            // Add to portfolio
+            state.portfolio.push(investment);
+            
+            // Log activity
+            addToActivityLog(`Investissement de €${formatCurrency(amount)} dans ${project.name}.`);
+            
+            // Update UI
+            updateDashboard();
+            renderPortfolio();
+            
+            return true;
+        }
+
+        function sellInvestment(investmentId) {
+            const index = state.portfolio.findIndex(investment => investment.id === investmentId);
+            
+            if (index === -1) return;
+            
+            const investment = state.portfolio[index];
+            
+            // Update balance
+            state.balance += investment.currentValue;
+            
+            // Calculate profit/loss
+            const profitLoss = investment.currentValue - investment.initialAmount;
+            const profitLossPercent = ((profitLoss / investment.initialAmount) * 100).toFixed(2);
+            const gainOrLoss = profitLoss >= 0 ? 'gain' : 'perte';
+            
+            // Remove from portfolio
+            state.portfolio.splice(index, 1);
+            
+            // Log activity
+            addToActivityLog(`Vente de ${investment.projectName} pour €${formatCurrency(investment.currentValue)} (${gainOrLoss} de ${profitLossPercent}%).`);
+            
+            // Update UI
+            updateDashboard();
+            renderPortfolio();
+        }
+
+        function simulateMarketMovement(months = 1) {
+            if (state.portfolio.length === 0) {
+                addToActivityLog(`Simulation de ${months} mois : aucun investissement actif.`);
+                return;
+            }
+            
+            state.portfolio.forEach(investment => {
+                for (let i = 0; i < months; i++) {
+                    // Calculate random return based on expected return and volatility
+                    const randomFactor = (Math.random() * 2 - 1) * investment.volatility / 100;
+                    const monthlyReturn = (investment.expectedReturn / 12) / 100;
+                    const actualReturn = monthlyReturn + randomFactor;
+                    
+                    // Update current value
+                    investment.currentValue *= (1 + actualReturn);
+                }
+            });
+            
+            // Update current month
+            state.currentMonth += months;
+            
+            // Update performance history
+            const performance = calculateOverallPerformance();
+            state.performanceHistory.push(performance);
+            
+            // Update chart
+            updatePerformanceChart();
+            
+            // Log activity
+            addToActivityLog(`Simulation de ${months} mois : la valeur du portefeuille est maintenant de €${formatCurrency(calculatePortfolioValue())}.`);
+            
+            // Update UI
+            updateDashboard();
+            renderPortfolio();
+        }
+
+        function updatePerformanceChart() {
+            // Update labels
+            performanceChart.data.labels = Array.from({ length: state.performanceHistory.length }, (_, i) => 
+                i === 0 ? 'Départ' : `Mois ${i}`
+            );
+            
+            // Update data
+            performanceChart.data.datasets[0].data = state.performanceHistory;
+            
+            // Update chart
+            performanceChart.update();
+        }
+
+        function addToActivityLog(message) {
+            const date = new Date();
+            const timestamp = date.toLocaleTimeString();
+            const logItem = document.createElement('li');
+            logItem.className = 'pb-2 mb-2 border-b border-gray-200';
+            logItem.innerHTML = `<span class="text-gray-500">[${timestamp}]</span> ${message}`;
+            
+            activityLogEl.prepend(logItem);
+        }
+
+        function getRiskColor(risk) {
+            const riskColors = {
+                'Très Faible': '#22c55e',  // Green
+                'Faible': '#84cc16',       // Lime
+                'Moyen-Faible': '#eab308', // Yellow
+                'Moyen': '#f59e0b',        // Amber
+                'Moyen-Élevé': '#f97316',  // Orange
+                'Élevé': '#ef4444',        // Red
+                'Très Élevé': '#dc2626'    // Dark red
+            };
+            
+            return riskColors[risk] || '#6366f1'; // Default to indigo
+        }
+
+        function resetSimulation() {
+            if (!confirm('Êtes-vous sûr de vouloir réinitialiser la simulation ? Tous vos investissements seront perdus.')) {
+                return;
+            }
+            
+            state.balance = 10000;
+            state.portfolio = [];
+            state.currentMonth = 0;
+            state.performanceHistory = [0];
+            
+            updatePerformanceChart();
+            updateDashboard();
+            renderPortfolio();
+            
+            addToActivityLog('Simulation réinitialisée. Solde: €10,000.00');
+        }
+
+        // Event Listeners
+        cancelInvestmentBtn.addEventListener('click', closeInvestmentModal);
+        
+        confirmInvestmentBtn.addEventListener('click', function() {
+            const projectId = parseInt(this.getAttribute('data-project-id'));
+            const amount = parseFloat(investmentAmountEl.value);
+            
+            if (makeInvestment(projectId, amount)) {
+                closeInvestmentModal();
+            }
+        });
+        
+        simulateMonthBtn.addEventListener('click', function() {
+            simulateMarketMovement(1);
+        });
+        
+        simulateYearBtn.addEventListener('click', function() {
+            simulateMarketMovement(12);
+        });
+        
+        resetSimulationBtn.addEventListener('click', resetSimulation);
+
+        // Initialize App
+        function initApp() {
+            updateDashboard();
+            renderProjects();
+            renderPortfolio();
+            addToActivityLog('Bienvenue sur InvestSimu! Vous avez €10,000.00 à investir.');
+        }
+
+        // Start the app
+        initApp();
+    </script>
+</body>
+</html>

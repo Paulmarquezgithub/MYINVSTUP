@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Certificate of Completion</title>
+  <style>
+    body { margin:0; padding:50px; font-family:serif; text-align:center; background:#f4f7f8; }
+    .certificate-content {
+      border:8px solid #001f3f; background:#fff; color:#001f3f;
+      padding:30px; max-width:700px; margin:40px auto; border-radius:4px;
+    }
+    .certificate-content h1 { font-size:2.5rem; margin-bottom:10px; }
+    .certificate-content h2 { font-size:2rem; margin:20px 0; }
+    .certificate-content p { font-size:1.2rem; margin:10px 0; }
+    button { margin:20px 10px 0; padding:10px 20px; font-size:1rem; border:none; border-radius:5px; cursor:pointer; }
+    #printBtn { background:#007bff; color:#fff; }
+    #backBtn  { background:#ccc;   color:#001f3f; }
+
+    /* CONFETTI */
+    .confetti-piece {
+      position:fixed; width:8px; height:8px; opacity:.9; z-index:10000;
+      animation:confetti 3s linear forwards;
+    }
+    @keyframes confetti {
+      0% { transform:translateY(-100vh) rotate(0deg); }
+      100% { transform:translateY(100vh) rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="certificate-content">
+    <h1>Certificate of Completion</h1>
+    <p>This certifies that</p>
+    <h2 id="certName">[Name]</h2>
+    <p>has successfully completed the</p>
+    <p><strong>Advanced Financial Analytics Course</strong></p>
+    <p>on <span id="certDate">[Date]</span></p>
+  </div>
+  <button id="printBtn">Print Certificate</button>
+  <button id="backBtn">Back to Quiz</button>
+
+  <script>
+    // Lecture des paramètres URL
+    const params = new URLSearchParams(location.search);
+    const name  = params.get('name') || '';
+    const date  = params.get('date') || '';
+    document.getElementById('certName').textContent = decodeURIComponent(name);
+    document.getElementById('certDate').textContent = decodeURIComponent(date);
+
+    // Confetti
+    function createConfetti() {
+      const colors = ['#FFC107','#FF5722','#4CAF50','#2196F3','#9C27B0'];
+      for (let i=0; i<100; i++){
+        const c = document.createElement('div');
+        c.className = 'confetti-piece';
+        c.style.background = colors[Math.floor(Math.random()*colors.length)];
+        c.style.left = Math.random()*100 + '%';
+        c.style.animationDelay = Math.random()*2 + 's';
+        document.body.appendChild(c);
+        setTimeout(() => c.remove(), 3500);
+      }
+    }
+    createConfetti();
+
+    // Actions des boutons
+    document.getElementById('printBtn').onclick = () => window.print();
+    document.getElementById('backBtn').onclick  = () => window.location.href = 'exam-questions.html';
+  </script>
+</body>
+</html>
